@@ -1,6 +1,22 @@
-## bookmark
-- push to glitch
-https://nju33.com/notes/glitch/articles/git%20push%20%E3%81%A7%E8%87%AA%E5%8B%95%E5%8F%8D%E6%98%A0#%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E3%83%9E%E3%82%B7%E3%83%B3%E3%81%AE%E6%BA%96%E5%82%99
+# Maneging Home work and Notifying Bot for Discord
 
-- git subtree
-https://qiita.com/takahashi-kazuki/items/0c34b3bc5da6700d38a5
+## Description
+
+## Usage
+Please create a .clasp.json file in the following format:
+
+``` json
+{
+    "scriptId": "INSERT YOUR SCRIPT ID",
+    "rootDir": "./dist/"
+}
+```
+
+## Notes for push
+We need to push /glitch to Glitch's Git repo, so we import /glitch as a subtree. Therefore, when you push commits, you need to push them to Glitch in addition to the usual GitHub push.
+
+``` shell
+git push origin master
+git subtree push --prefix=glitch glitch master
+```
+
