@@ -10,3 +10,13 @@ function wakeGlitch(): void {
     const response = UrlFetchApp.fetch(glitch_url!, params);
     console.log(response);
 }
+
+// スプレッドシートの内容を JSON で返す
+function doGet() {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+}
+
+// スプレッドシートに内容を追記するまたは内容を削除する
+function doPost(e) {
+
+}
