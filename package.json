@@ -17,5 +17,8 @@
     "keywords": [
         "node",
         "glitch"
-    ]
+    ],
+    "devDependencies": {
+        "@types/node": "^18.16.3"
+    }
 }
