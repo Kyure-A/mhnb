@@ -14,12 +14,9 @@
 	"esModuleInterop": true,
 	"forceConsistentCasingInFileNames": true,
 	"strict": true,
-<<<<<<< HEAD
 	"skipLibCheck": true,
 	"resolveJsonModule": true
-=======
 	"skipLibCheck": true
->>>>>>> aec229f4ebfb59cc3aaeef9b2302336d30a2b05f
     },
     "include": ["./src/*.ts", "./src/commands/*.ts"],
     "exclude": ["node_modules"]
