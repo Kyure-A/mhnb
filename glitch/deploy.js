@@ -1,9 +1,6 @@
-"use strict";
-// コマンド設定部分
-const { SlashCommandBuilder } = require("discord.js");
-const { APIUser } = require('discord-api-types/v10');
-const { REST, Routes } = require("discord.js");
-const fs = require('node:fs');
+import { REST, Routes } from "discord.js";
+import fs from "node:fs";
+require("dotenv").config();
 const commands = [];
 const files = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of files) {
