@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, REST, Routes } from "discord.js";
+const { SlashCommandBuilder, REST, Routes } = require("discord.js");
 import { APIUser } from "discord-api-types/v10"
 import fs from "node:fs";
 require("dotenv").config();
