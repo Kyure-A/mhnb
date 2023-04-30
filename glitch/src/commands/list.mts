@@ -9,7 +9,7 @@ module.exports = {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName == "list") {
-
+	    
         }
     }
 }
