@@ -1,7 +1,6 @@
 import { SlashCommandBuilder, REST, Routes } from "discord.js";
 import { APIUser } from "discord-api-types/v10"
 import fs from "node:fs";
-import config from "../.config.json"
 require("dotenv").config();
 
 const commands: any[] = [];
