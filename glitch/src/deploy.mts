@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, REST, Routes } = require("discord.js");
-import { APIUser } from "discord-api-types/v10"
 import fs from "node:fs";
+import { APIUser } from "discord-api-types/v10"
 require("dotenv").config();
 
 const commands: any[] = [];
