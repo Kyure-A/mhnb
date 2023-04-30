@@ -2,4 +2,9 @@
 .glitchdotcom.json
 .node-gyp
 node_modules
+<<<<<<< HEAD
 /commands
+.env
+=======
+/commands
+>>>>>>> a12db89e35ba6182b4c8baa249785316e4f48410

@@ -1,5 +1,5 @@
 import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
-import { application_id, guild_id, token } from "../.config.json"
+require("dotenv").config();
 
 const create = require("commands/create")
 const list = require("commands/list")
@@ -9,4 +9,6 @@ client.once(Events.ClientReady, c => {
     console.log(`$Logined {c.user.tag}`);
 });
 
-client.login(token);
+client.login(process.env.token!);
+
+
