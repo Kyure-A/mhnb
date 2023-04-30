@@ -15,7 +15,7 @@
 	"forceConsistentCasingInFileNames": true,
 	"strict": true,
 	"skipLibCheck": true,
-	"resolveJsonModule": true
+	"resolveJsonModule": true,
 	"skipLibCheck": true
     },
     "include": ["./src/*.ts", "./src/commands/*.ts"],
