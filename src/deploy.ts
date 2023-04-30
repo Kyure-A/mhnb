@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, REST, Routes } from "discord.js";
+const { SlashCommandBuilder, REST, Routes } = require("discord.js");
 import { APIUser } from "discord-api-types/v10"
 import fs from "node:fs";
 require("dotenv").config();
@@ -17,7 +17,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.token!)
 
 async function main() {
     await rest.put(
-        Routes.applicationCommands("BOTのユーザーIDをコピーして貼り付ける"),
+        Routes.applicationCommands(process.env.application_id!),
         { body: commands }
     )
 }
