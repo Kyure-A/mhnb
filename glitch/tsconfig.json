@@ -18,6 +18,6 @@
 	"resolveJsonModule": true,
 	"skipLibCheck": true
     },
-    "include": ["./src/*.ts", "./src/commands/*.ts"],
+    "include": ["./src/*.mts", "./src/commands/*.mts"],
     "exclude": ["node_modules"]
 }
