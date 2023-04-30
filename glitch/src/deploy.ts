@@ -17,7 +17,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.token!)
 
 async function main() {
     await rest.put(
-        Routes.applicationCommands("BOTのユーザーIDをコピーして貼り付ける"),
+        Routes.applicationCommands(process.env.application_id!),
         { body: commands }
     )
 }
