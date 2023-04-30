@@ -1,6 +1,3 @@
 node_modules/
 /gas/dist/bundle.js
 /gas/.clasp.json
-/glitch/server.js
-/glitch/commands
-/glitch/deploy.js
