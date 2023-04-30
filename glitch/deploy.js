@@ -1,4 +1,4 @@
-import { REST, Routes } from "discord.js";
+const { SlashCommandBuilder, REST, Routes } = require("discord.js");
 import fs from "node:fs";
 require("dotenv").config();
 const commands = [];
