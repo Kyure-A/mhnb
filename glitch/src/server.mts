@@ -1,8 +1,10 @@
-import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
-require("dotenv").config();
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const create = require("commands/create")
-const list = require("commands/list")
+import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
+
+// const create = require("commands/create")
+// const list = require("commands/list")
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.once(Events.ClientReady, c => {
