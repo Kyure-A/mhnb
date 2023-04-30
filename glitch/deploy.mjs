@@ -11,6 +11,6 @@ for (const file of files) {
 //登録用関数
 const rest = new REST({ version: '10' }).setToken(process.env.token);
 async function main() {
-    await rest.put(Routes.applicationCommands(process.env.application_id), { body: commands });
+    await rest.put(Routes.applicationGuildCommands(process.env.application_id, process.env.guild_id), { body: commands });
 }
 main().catch(err => console.log(err));
