@@ -1,13 +1,11 @@
-import { ActionRowBuilder, Events, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } from "discord.js";
-
+import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } from "discord.js";
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('create')
         .setDescription('課題管理リストを作成します'),
-
-    execute: async function(interaction: any) {
-        if (!interaction.isChatInputCommand()) return;
-
+    execute: async function (interaction) {
+        if (!interaction.isChatInputCommand())
+            return;
         if (interaction.commandName == "create") {
             const modal = new ModalBuilder()
                 .setCustomId("modal")
@@ -24,14 +22,8 @@ module.exports = {
                 .setCustomId("date")
                 .setLabel("期日 (mm/dd 形式で入力してください)")
                 .setStyle(TextInputStyle.Short);
-
-            modal.addComponents(
-                new ActionRowBuilder<TextInputBuilder>().addComponents(homework_name),
-                new ActionRowBuilder<TextInputBuilder>().addComponents(subject_name),
-                new ActionRowBuilder<TextInputBuilder>().addComponents(date)
-            )
-
+            modal.addComponents(new ActionRowBuilder().addComponents(homework_name), new ActionRowBuilder().addComponents(subject_name), new ActionRowBuilder().addComponents(date));
             await interaction.showModal(modal);
         }
     }
-}
+};

@@ -2,6 +2,4 @@
 .glitchdotcom.json
 .node-gyp
 node_modules
-server.js
-deploy.js
 /commands
