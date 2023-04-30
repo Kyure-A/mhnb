@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
+
 import { SlashCommandBuilder, REST, Routes } from "discord.js";
 import fs from "node:fs";
 import { APIUser } from "discord-api-types/v10"
@@ -18,7 +19,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.token!)
 
 async function main() {
     await rest.put(
-        Routes.applicationCommands(process.env.application_id!),
+        Routes.applicationGuildCommands(process.env.application_id!, process.env.guild_id!),
         { body: commands }
     )
 }
