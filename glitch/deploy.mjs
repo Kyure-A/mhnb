@@ -3,7 +3,7 @@ dotenv.config();
 import { REST, Routes } from "discord.js";
 import fs from "node:fs";
 const commands = [];
-const files = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const files = fs.readdirSync('./commands').filter(file => file.endsWith('.mjs'));
 for (const file of files) {
     const command = require(`./commands/${file}`);
     commands.push(command.data.toJSON());
