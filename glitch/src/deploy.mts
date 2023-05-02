@@ -6,7 +6,7 @@ import fs from "node:fs";
 import { APIUser } from "discord-api-types/v10"
 
 const commands: any[] = [];
-const files = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const files = fs.readdirSync('./commands').filter(file => file.endsWith('.mjs'));
 
 for (const file of files) {
     const command = require(`./commands/${file}`);
