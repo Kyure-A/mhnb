@@ -1,9 +1,12 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+
 import { SlashCommandBuilder, REST, Routes } from "discord.js";
-import fs from "node:fs";
 import { APIUser } from "discord-api-types/v10"
+import fs from "node:fs";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 
 const commands: any[] = [];
 const files = fs.readdirSync('./commands').filter(file => file.endsWith('.mjs'));

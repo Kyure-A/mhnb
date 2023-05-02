@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
 	/* Visit https://aka.ms/tsconfig.json to read more about this file */
-	"target": "es2019",                                  
+	"target": "es2020",                                  
 	"experimentalDecorators": true,                   
-	"module": "es2015",
+	"module": "es2020",
 	"moduleResolution": "node",  
 	"baseUrl": "./src",
 	"outDir": ".",

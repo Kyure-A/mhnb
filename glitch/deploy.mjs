@@ -2,6 +2,8 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import { REST, Routes } from "discord.js";
 import fs from "node:fs";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const commands = [];
 const files = fs.readdirSync('./commands').filter(file => file.endsWith('.mjs'));
 for (const file of files) {
