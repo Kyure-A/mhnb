@@ -1,6 +1,6 @@
 import { ActionRowBuilder, Events, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } from "discord.js";
 
-export let list = {
+module.exports = {
     data: new SlashCommandBuilder()
         .setName('list')
         .setDescription('課題管理リストを表示します'),
