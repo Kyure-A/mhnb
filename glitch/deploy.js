@@ -22,22 +22,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const discord_js_1 = require("discord.js");
-const node_fs_1 = __importDefault(require("node:fs"));
 // import { createRequire } from "module";
 // const require = createRequire(import.meta.url);
-const commands = [];
-const files = node_fs_1.default.readdirSync('./commands').filter(file => file.endsWith('.mjs'));
-for (const file of files) {
-    const command = require(`./commands/${file}`);
-    commands.push(command.data.toJSON());
-}
+const create = require("./commands/create");
+const list = require("./commands/list");
+const commands = [
+    create.data.toJSON(),
+    list.data.toJSON()
+];
 //登録用関数
 const rest = new discord_js_1.REST({ version: '10' }).setToken(process.env.token);
 async function main() {
