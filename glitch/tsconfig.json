@@ -3,7 +3,7 @@
 	/* Visit https://aka.ms/tsconfig.json to read more about this file */
 	"target": "es2020",                                  
 	"experimentalDecorators": true,                   
-	"module": "es2020",
+	"module": "commonjs",
 	"moduleResolution": "node",  
 	"baseUrl": "./src",
 	"outDir": ".",
@@ -18,6 +18,6 @@
 	"resolveJsonModule": true,
 	"skipLibCheck": true
     },
-    "include": ["./src/*.mts", "./src/commands/*.mts"],
+    "include": ["./src/*.ts", "./src/commands/*.ts"],
     "exclude": ["node_modules"]
 }
