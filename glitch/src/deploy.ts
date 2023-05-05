@@ -1,20 +1,18 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
-
 import { SlashCommandBuilder, REST, Routes } from "discord.js";
 import { APIUser } from "discord-api-types/v10"
-import fs from "node:fs";
 // import { createRequire } from "module";
 // const require = createRequire(import.meta.url);
 
-const commands: any[] = [];
-const files = fs.readdirSync('./commands').filter(file => file.endsWith('.mjs'));
+const create = require("./commands/create");
+const list = require("./commands/list");
 
-for (const file of files) {
-    const command = require(`./commands/${file}`);
-    commands.push(command.data.toJSON());
-}
+const commands: any[] = [
+    create.data.toJSON(),
+    list.data.toJSON()
+];
 
 //登録用関数
 
