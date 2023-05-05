@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create = void 0;
 const discord_js_1 = require("discord.js");
-exports.create = {
+module.exports = {
     data: new discord_js_1.SlashCommandBuilder()
         .setName('create')
         .setDescription('課題管理リストを作成します'),
