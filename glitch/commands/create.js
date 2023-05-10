@@ -4,7 +4,7 @@ const discord_js_1 = require("discord.js");
 module.exports = {
     data: new discord_js_1.SlashCommandBuilder()
         .setName('create')
-        .setDescription('課題管理リストを作成します'),
+        .setDescription('新しい課題を作成します'),
     execute: async function (interaction) {
         if (!interaction.isChatInputCommand())
             return;
@@ -20,11 +20,17 @@ module.exports = {
                 .setCustomId("subject_name")
                 .setLabel("教科名 (シラバスに載っている正式名称で入力してください)")
                 .setStyle(discord_js_1.TextInputStyle.Short);
-            const date = new discord_js_1.TextInputBuilder()
-                .setCustomId("date")
-                .setLabel("期日 (mm/dd 形式で入力してください)")
+            const month = new discord_js_1.TextInputBuilder()
+                .setCustomId("month")
+                .setLabel("期限 (月)")
+                .setPlaceholder("月を 1 - 12 で入力してください")
                 .setStyle(discord_js_1.TextInputStyle.Short);
-            modal.addComponents(new discord_js_1.ActionRowBuilder().addComponents(homework_name), new discord_js_1.ActionRowBuilder().addComponents(subject_name), new discord_js_1.ActionRowBuilder().addComponents(date));
+            const day = new discord_js_1.TextInputBuilder()
+                .setCustomId("day")
+                .setLabel("期限 (日)")
+                .setPlaceholder("日を 1 - 31 で入力してください")
+                .setStyle(discord_js_1.TextInputStyle.Short);
+            modal.addComponents(new discord_js_1.ActionRowBuilder().addComponents(homework_name), new discord_js_1.ActionRowBuilder().addComponents(subject_name), new discord_js_1.ActionRowBuilder().addComponents(month), new discord_js_1.ActionRowBuilder().addComponents(day));
             await interaction.showModal(modal);
         }
     }

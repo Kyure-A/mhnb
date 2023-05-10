@@ -34,9 +34,14 @@ const commands = [
     create.data.toJSON(),
     list.data.toJSON()
 ];
-//登録用関数
 const rest = new discord_js_1.REST({ version: '10' }).setToken(process.env.token);
 async function main() {
-    await rest.put(discord_js_1.Routes.applicationGuildCommands(process.env.application_id, process.env.guild_id), { body: commands });
+    try {
+        await rest.put(discord_js_1.Routes.applicationGuildCommands(process.env.application_id, process.env.guild_id), { body: commands });
+        console.log("Successful! Your commands are deployed.");
+    }
+    catch (error) {
+        console.error("An error occurred. Please check your code.");
+    }
 }
 main().catch(err => console.log(err));

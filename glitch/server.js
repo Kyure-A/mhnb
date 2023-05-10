@@ -32,4 +32,59 @@ const client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBit
 client.once(discord_js_1.Events.ClientReady, () => {
     console.log("Ready");
 });
+// slash commands 
+client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
+    if (!interaction.isChatInputCommand())
+        return; // isSlashCommand 
+    if (interaction.commandName === create.data.name) {
+        try {
+            await create.execute(interaction);
+        }
+        catch (error) {
+            console.error(error);
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp({ content: "error", ephemeral: true });
+            }
+            else {
+                await interaction.reply({ content: "error", ephemeral: true });
+            }
+        }
+    }
+    if (interaction.commandName === list.data.name) {
+        try {
+            await list.execute(interaction);
+        }
+        catch (error) {
+            console.error(error);
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp({ content: "error", ephemeral: true });
+            }
+            else {
+                await interaction.reply({ content: "error", ephemeral: true });
+            }
+        }
+    }
+    else {
+        console.error(`${interaction.commandName} is not found`);
+    }
+});
+// create (modal)
+client.on(discord_js_1.Events.InteractionCreate, interaction => {
+    if (!interaction.isModalSubmit())
+        return;
+    // Get the data entered by the user
+    const homework = interaction.fields.getTextInputValue("homework_name");
+    const subject = interaction.fields.getTextInputValue("subject_name");
+    const month = interaction.fields.getTextInputValue("month");
+    const day = interaction.fields.getTextInputValue("day");
+    const month_num = parseInt(month);
+    const day_num = parseInt(day);
+    const json = {
+        "command": "create",
+        "homework": homework,
+        "subject": subject,
+        "month": month_num,
+        "day": day_num
+    };
+});
 client.login(process.env.token);
