@@ -20,7 +20,8 @@ module.exports = {
                 .setStyle(TextInputStyle.Short);
             const subject_name = new TextInputBuilder()
                 .setCustomId("subject_name")
-                .setLabel("教科名 (シラバスに載っている正式名称で入力してください)")
+                .setLabel("教科名")
+                .setPlaceholder("シラバスに載っている正式名称で入力してください")
                 .setMinLength(1)
                 .setMaxLength(20)
                 .setStyle(TextInputStyle.Short);

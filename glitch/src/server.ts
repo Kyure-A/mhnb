@@ -5,6 +5,7 @@ import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
 
 const create = require("./commands/create");
 const list = require("./commands/list");
+const cdelete = require("./commands/delete"); // yoyakugo datta
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.once(Events.ClientReady, () => {
@@ -37,10 +38,30 @@ client.on(Events.InteractionCreate, async interaction => {
         }
     }
 
-    if (interaction.commandName === list.data.name) {
+    else if (interaction.commandName === list.data.name) {
 
         try {
             await list.execute(interaction);
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp({ content: "error", ephemeral: true });
+            }
+
+            else {
+                await interaction.reply({ content: "error", ephemeral: true });
+            }
+        }
+    }
+
+    else if (interaction.commandName === cdelete.data.name) {
+
+        try {
+            await cdelete.execute(interaction);
         }
 
         catch (error) {
