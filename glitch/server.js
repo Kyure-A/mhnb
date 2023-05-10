@@ -26,8 +26,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const discord_js_1 = require("discord.js");
-const create = require("commands/create");
-const list = require("commands/list");
+const create = require("./commands/create");
+const list = require("./commands/list");
 const client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBits.Guilds] });
 client.once(discord_js_1.Events.ClientReady, () => {
     console.log("Ready");
