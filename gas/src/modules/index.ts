@@ -38,10 +38,13 @@ export function doGet(e: any) {
 // スプレッドシートに内容を追記するまたは内容を削除する
 export function doPost(e: any) {
     const params = JSON.parse(e.postData.getDataAsString());
-    const post_type = params.post_type;
+    const post_type = params.command;
 
     if (post_type == "create") {
-
+        const homework: string = params.homework;
+        const subject: string = params.subject;
+        const month: number = params.month;
+        const day: number = params.day;
     }
 
     if (post_type == "delete") {

@@ -3,7 +3,7 @@ import { ActionRowBuilder, Events, ModalBuilder, TextInputBuilder, TextInputStyl
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('create')
-        .setDescription('課題管理リストを作成します'),
+        .setDescription('新しい課題を作成します'),
 
     execute: async function(interaction: any) {
         if (!interaction.isChatInputCommand()) return;
@@ -20,15 +20,23 @@ module.exports = {
                 .setCustomId("subject_name")
                 .setLabel("教科名 (シラバスに載っている正式名称で入力してください)")
                 .setStyle(TextInputStyle.Short);
-            const date = new TextInputBuilder()
-                .setCustomId("date")
-                .setLabel("期日 (mm/dd 形式で入力してください)")
+            const month = new TextInputBuilder()
+                .setCustomId("month")
+                .setLabel("期限 (月)")
+                .setPlaceholder("月を 1 - 12 で入力してください")
                 .setStyle(TextInputStyle.Short);
+            const day = new TextInputBuilder()
+                .setCustomId("day")
+                .setLabel("期限 (日)")
+                .setPlaceholder("日を 1 - 31 で入力してください")
+                .setStyle(TextInputStyle.Short);
+
 
             modal.addComponents(
                 new ActionRowBuilder<TextInputBuilder>().addComponents(homework_name),
                 new ActionRowBuilder<TextInputBuilder>().addComponents(subject_name),
-                new ActionRowBuilder<TextInputBuilder>().addComponents(date)
+                new ActionRowBuilder<TextInputBuilder>().addComponents(month),
+                new ActionRowBuilder<TextInputBuilder>().addComponents(day),
             )
 
             await interaction.showModal(modal);
