@@ -28,6 +28,7 @@ dotenv.config();
 const discord_js_1 = require("discord.js");
 const create = require("./commands/create");
 const list = require("./commands/list");
+const cdelete = require("./commands/delete"); // yoyakugo datta
 const client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBits.Guilds] });
 client.once(discord_js_1.Events.ClientReady, () => {
     console.log("Ready");
@@ -50,9 +51,23 @@ client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
             }
         }
     }
-    if (interaction.commandName === list.data.name) {
+    else if (interaction.commandName === list.data.name) {
         try {
             await list.execute(interaction);
+        }
+        catch (error) {
+            console.error(error);
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp({ content: "error", ephemeral: true });
+            }
+            else {
+                await interaction.reply({ content: "error", ephemeral: true });
+            }
+        }
+    }
+    else if (interaction.commandName === cdelete.data.name) {
+        try {
+            await cdelete.execute(interaction);
         }
         catch (error) {
             console.error(error);
