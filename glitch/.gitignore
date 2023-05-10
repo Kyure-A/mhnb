@@ -3,3 +3,7 @@
 .node-gyp
 node_modules
 .env
+
+
+# *.js
+# commands/*.js

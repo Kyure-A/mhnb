@@ -12,11 +12,39 @@ export function wakeGlitch(): void {
 }
 
 // スプレッドシートの内容を JSON で返す
-export function doGet() {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+export function doGet(e: any) {
+    const params = JSON.parse(e.postData.getDataAsString());
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
+    const value: string[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
+
+    const fields = [];
+
+    for (let i = 0; i < value.length; i++) {
+        const homework_name: string = value[i][0];
+        const subject_name: string = value[i][1];
+        const deadline: string = value[i][2]; // due date
+        const description: string = value[i][3];
+
+        const json = {
+            "name": `${subject_name}: ${homework_name} (${deadline})`,
+            "value": description,
+            "inline": false
+        }
+
+        fields.push(json);
+    }
 }
 
 // スプレッドシートに内容を追記するまたは内容を削除する
 export function doPost(e: any) {
+    const params = JSON.parse(e.postData.getDataAsString());
+    const post_type = params.post_type;
 
+    if (post_type == "create") {
+
+    }
+
+    if (post_type == "delete") {
+
+    }
 }
