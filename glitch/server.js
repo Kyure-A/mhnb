@@ -85,6 +85,8 @@ client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
 });
 // create (modal)
 client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
+    if (!interaction.isModalSubmit())
+        return;
     try {
         await create.modal(interaction);
         console.log("Modal is send.");
