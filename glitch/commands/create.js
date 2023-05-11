@@ -83,11 +83,11 @@ module.exports = {
         if (!interaction.isModalSubmit())
             return;
         // Get the data entered by the user
-        const homework = interaction.fields.getTextInputValue("homework_name");
-        const subject = interaction.fields.getTextInputValue("subject_name");
-        const month = interaction.fields.getTextInputValue("month");
-        const day = interaction.fields.getTextInputValue("day");
-        const description = interaction.fields.getTextInputValue("description");
+        const homework = await interaction.fields.getTextInputValue("homework_name");
+        const subject = await interaction.fields.getTextInputValue("subject_name");
+        const month = await interaction.fields.getTextInputValue("month");
+        const day = await interaction.fields.getTextInputValue("day");
+        const description = await interaction.fields.getTextInputValue("description");
         const month_num = parseInt(month);
         const day_num = parseInt(day);
         const json = {
@@ -101,10 +101,10 @@ module.exports = {
         await axios_1.default.post(process.env.gas_url, json)
             .then(response => {
             console.log(response.data);
+            interaction.reply(`課題「${homework}」が追加されました！`);
         })
             .catch(error => {
             console.error(error);
         });
-        await interaction.reply(`課題「${homework}」が追加されました！`);
     }
 };
