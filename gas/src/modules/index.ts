@@ -52,29 +52,35 @@ export function taskBuilder(value: any[][]) {
     }
 }
 
-export function doCreate(params: any) {
+export function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any): void {
     const homework: string = params.homework;
     const subject: string = params.subject;
     const month: number = params.month;
     const day: number = params.day;
+    sheet.appendRow([homework, subject, month, day]);
 }
 
-// スプレッドシートの内容を JSON で返す
+export function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
+
+}
+
+// "/list"
 export function doGet(e: any) {
     const params = JSON.parse(e.postData.getDataAsString());
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
+    const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
 
     const fields = [];
 }
 
-// スプレッドシートに内容を追記するまたは内容を削除する
+// "/create", "/delete"
 export function doPost(e: any) {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const params = JSON.parse(e.postData.getDataAsString());
     const post_type = params.command;
 
     if (post_type == "create") {
-        doCreate(params);
+        doCreate(sheet!, params);
     }
 
     if (post_type == "delete") {
