@@ -81,7 +81,9 @@ export function doPost(e: any) {
 
     if (post_type == "create") {
         doCreate(sheet!, params);
+        return ContentService.createTextOutput("created");
     }
+
 
     if (post_type == "delete") {
 
