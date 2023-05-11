@@ -87,6 +87,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
 // create (modal)
 client.on(Events.InteractionCreate, async interaction => {
+    if (!interaction.isModalSubmit()) return;
 
     try {
         await create.modal(interaction);
