@@ -1,6 +1,6 @@
 import formatDistance from "date-fns/formatDistance"
 import getYear from "date-fns/getYear"
-import min from "date-fns/min"
+import compareAsc from "date-fns/compareAsc"
 
 export function wakeGlitch(): void {
     const glitch_url: string | null = PropertiesService.getDocumentProperties().getProperty("glitch_url");
@@ -21,13 +21,14 @@ type Field = {
     inline: boolean
 }
 
-export function sortTask(date_list: Set<Date>, tasks: Map<Date, Field[]>) {
-    const date_list_array: Date[] = Array.from(date_list);
+export function pushToMap(map: Map<any, any>, key: any, value: any) {
+    if (map.has(key)) map.get(key).push(value);
+    else map.set(key, value);
 }
 
 export function taskBuilder(value: any[][]) {
-    const date_list = new Set<Date>();
-    const tasks = new Map<Date, Field[]>();
+    let date_set = new Set<Date>();
+    let task_map = new Map<Date, Field[]>();
     const now: Date = new Date();
 
     for (let i = 0; i < value.length; i++) {
@@ -47,9 +48,29 @@ export function taskBuilder(value: any[][]) {
         if (now.getMonth() > month) adder = 1;
 
         const task_date: Date = new Date(getYear(now) + adder, month, day);
-        date_list.add(task_date);
-        // push "task" to map with Key ("task_date")
+        date_set.add(task_date);
+        pushToMap(task_map, task_date, task);
     }
+
+    let date_array: Date[] = Array.from(date_set).sort(compareAsc);
+
+    let fields: Field[] = [];
+
+    let counter: number = 1;
+    for (let i = 0; i < date_array.length; i++) {
+        const task_array = task_map.get(date_array[i]);
+
+        if (task_array !== undefined) {
+
+            for (const task of task_array) {
+                task.name = "[${counter}] " + task.name;
+                fields.push(task);
+                counter++;
+            }
+        }
+    }
+
+    return fields;
 }
 
 export function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any): void {
@@ -70,14 +91,16 @@ export function doGet(e: any) {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
 
-    const fields = [];
+    const fields = taskBuilder(value);
+
+    return ContentService.createTextOutput(JSON.stringify(fields)).setMimeType(ContentService.MimeType.JSON);
 }
 
 // "/create", "/delete"
 export function doPost(e: any) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
+    const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const params = JSON.parse(e.postData.getDataAsString());
-    const post_type = params.command;
+    const post_type: string = params.command;
 
     if (post_type == "create") {
         doCreate(sheet!, params);
