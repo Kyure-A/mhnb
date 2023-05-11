@@ -18,7 +18,7 @@ module.exports = {
                     .then(function (response) {
                     const fields = response.data;
                     const embed = new discord_js_1.EmbedBuilder()
-                        .setTitle("")
+                        .setTitle("課題リスト")
                         .setFields(fields);
                     interaction.reply({ embed: [embed] });
                     console.log();

@@ -16,7 +16,7 @@ module.exports = {
                     .then(function(response) {
                         const fields = response.data;
                         const embed = new EmbedBuilder()
-                            .setTitle("")
+                            .setTitle("課題リスト")
                             .setFields(fields);
                         interaction.reply({ embed: [embed] });
 
