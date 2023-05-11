@@ -39,12 +39,12 @@ export function taskBuilder(value: any[][]) {
         const description: string = value[i][4];
 
         const task: Field = {
-            "name": `${subject_name}: ${homework_name} `,
+            "name": `${subject_name}: ${homework_name} (${month}/${day})`,
             "value": description,
             "inline": false
         }
 
-        let adder = 0;
+        let adder: 0 | 1 = 0;
         if (now.getMonth() > month) adder = 1;
 
         const task_date: Date = new Date(getYear(now) + adder, month, day);
@@ -58,11 +58,12 @@ export function taskBuilder(value: any[][]) {
 
     let counter: number = 1;
     for (let i = 0; i < date_array.length; i++) {
-        const task_array = task_map.get(date_array[i]);
+        const task_array: Field[] | undefined = task_map.get(date_array[i]);
 
         if (task_array !== undefined) {
 
-            for (const task of task_array.values()) {
+            for (let j = 0; j < task_array.length; j++) {
+                let task = task_array[j];
                 task.name = "[${counter}] " + task.name;
                 fields.push(task);
                 counter++;
