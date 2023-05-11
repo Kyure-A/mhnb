@@ -89,7 +89,7 @@ module.exports = {
             "month": month_num,
             "day": day_num
         };
-        axios_1.default.post(process.env.postURL, json)
+        await axios_1.default.post(process.env.postURL, { params: json })
             .then(response => {
             console.log(response);
         })

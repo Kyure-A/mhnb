@@ -76,7 +76,7 @@ module.exports = {
             "day": day_num
         }
 
-        axios.post(process.env.postURL!, json)
+        await axios.post(process.env.postURL!, { params: json })
             .then(response => {
                 console.log(response);
             })
