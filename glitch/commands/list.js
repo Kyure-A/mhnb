@@ -21,7 +21,7 @@ module.exports = {
                         .setTitle("課題リスト")
                         .setFields(fields);
                     interaction.reply({ embed: [embed] });
-                    console.log();
+                    console.log("OK");
                 })
                     .catch(function (error) {
                     console.log(error);
