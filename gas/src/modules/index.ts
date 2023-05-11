@@ -1,6 +1,6 @@
 import formatDistance from "date-fns/formatDistance"
-import getYear from 'date-fns/getYear'
-import min from 'date-fns/min'
+import getYear from "date-fns/getYear"
+import min from "date-fns/min"
 
 export function wakeGlitch(): void {
     const glitch_url: string | null = PropertiesService.getDocumentProperties().getProperty("glitch_url");

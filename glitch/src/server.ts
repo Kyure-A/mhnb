@@ -85,24 +85,14 @@ client.on(Events.InteractionCreate, async interaction => {
 
 
 // create (modal)
-client.on(Events.InteractionCreate, interaction => {
-    if (!interaction.isModalSubmit()) return;
+client.on(Events.InteractionCreate, async interaction => {
 
-    // Get the data entered by the user
-    const homework: string = interaction.fields.getTextInputValue("homework_name");
-    const subject: string = interaction.fields.getTextInputValue("subject_name");
-    const month: string = interaction.fields.getTextInputValue("month");
-    const day: string = interaction.fields.getTextInputValue("day");
+    try {
+        await create.modal(interaction);
+    }
 
-    const month_num: number = parseInt(month);
-    const day_num: number = parseInt(day);
-
-    const json = {
-        "command": "create",
-        "homework": homework,
-        "subject": subject,
-        "month": month_num,
-        "day": day_num
+    catch (error) {
+        console.error(error);
     }
 });
 
