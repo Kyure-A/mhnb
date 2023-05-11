@@ -74,12 +74,12 @@ export function taskBuilder(value: any[][]) {
     return fields;
 }
 
-export function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any): void {
-    const homework: string = params.homework;
-    const subject: string = params.subject;
-    const month: number = params.month;
-    const day: number = params.day;
-    const description: string = params.description;
+export async function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any): Promise<void> {
+    const homework: string = await params.homework;
+    const subject: string = await params.subject;
+    const month: number = await params.month;
+    const day: number = await params.day;
+    const description: string = await params.description;
     sheet.appendRow([homework, subject, month, day, description]);
 }
 
@@ -88,7 +88,7 @@ export function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
 }
 
 // "/list"
-export function doGet(e: any) {
+export async function doGet() {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
 
@@ -98,9 +98,9 @@ export function doGet(e: any) {
 }
 
 // "/create", "/delete"
-export function doPost(e: any) {
+export async function doPost(e: any) {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
-    const params = JSON.parse(e.postData.getDataAsString());
+    const params = await JSON.parse(e.postData.getDataAsString());
     const post_type: string = params.command;
 
     if (post_type == "create") {
