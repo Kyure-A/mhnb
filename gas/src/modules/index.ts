@@ -88,6 +88,6 @@ export function doPost(e: any) {
 
     }
 
-    return ContentService.createTextOutput("OK");
+    return ContentService.createTextOutput("");
 }
 
