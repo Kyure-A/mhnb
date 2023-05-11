@@ -68,7 +68,14 @@ module.exports = {
                 .setMinLength(1)
                 .setMaxLength(2)
                 .setStyle(discord_js_1.TextInputStyle.Short);
-            modal.addComponents(new discord_js_1.ActionRowBuilder().addComponents(homework_name), new discord_js_1.ActionRowBuilder().addComponents(subject_name), new discord_js_1.ActionRowBuilder().addComponents(month), new discord_js_1.ActionRowBuilder().addComponents(day));
+            const description = new discord_js_1.TextInputBuilder()
+                .setCustomId("description")
+                .setLabel("説明")
+                .setPlaceholder("")
+                .setMinLength(1)
+                .setMaxLength(100)
+                .setStyle(discord_js_1.TextInputStyle.Paragraph);
+            modal.addComponents(new discord_js_1.ActionRowBuilder().addComponents(homework_name), new discord_js_1.ActionRowBuilder().addComponents(subject_name), new discord_js_1.ActionRowBuilder().addComponents(month), new discord_js_1.ActionRowBuilder().addComponents(day), new discord_js_1.ActionRowBuilder().addComponents(description));
             await interaction.showModal(modal);
         }
     },
@@ -80,6 +87,7 @@ module.exports = {
         const subject = interaction.fields.getTextInputValue("subject_name");
         const month = interaction.fields.getTextInputValue("month");
         const day = interaction.fields.getTextInputValue("day");
+        const description = interaction.fields.getTextInputValue("description");
         const month_num = parseInt(month);
         const day_num = parseInt(day);
         const json = {
@@ -87,7 +95,8 @@ module.exports = {
             "homework": homework,
             "subject": subject,
             "month": month_num,
-            "day": day_num
+            "day": day_num,
+            "description": description
         };
         await axios_1.default.post(process.env.gas_url, json)
             .then(response => {
