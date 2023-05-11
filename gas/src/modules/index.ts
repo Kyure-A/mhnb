@@ -1,3 +1,6 @@
+import formatDistance from "date-fns/formatDistance"
+import getYear from 'date-fns/getYear'
+
 export function wakeGlitch(): void {
     const glitch_url: string | null = PropertiesService.getDocumentProperties().getProperty("glitch_url");
     const data = {};
@@ -11,28 +14,52 @@ export function wakeGlitch(): void {
     console.log(response);
 }
 
-// スプレッドシートの内容を JSON で返す
-export function doGet(e: any) {
-    const params = JSON.parse(e.postData.getDataAsString());
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
-    const value: string[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
+type Field = {
+    name: string,
+    value: string,
+    inline: boolean
+}
 
-    const fields = [];
+export function sortTask(value: any[][]) {
+    const date_list = new Set<Date>();
+    const tasks = new Map<Date, Field[]>();
+    const now: Date = new Date();
 
     for (let i = 0; i < value.length; i++) {
         const homework_name: string = value[i][0];
         const subject_name: string = value[i][1];
-        const deadline: string = value[i][2]; // due date
-        const description: string = value[i][3];
+        const month: number = value[i][2];
+        const day: number = value[i][3];
+        const description: string = value[i][4];
 
-        const json = {
-            "name": `${subject_name}: ${homework_name} (${deadline})`,
+        const task: Field = {
+            "name": `${subject_name}: ${homework_name} `,
             "value": description,
             "inline": false
         }
 
-        fields.push(json);
+        let adder = 0;
+        if (now.getMonth() > month) adder = 1;
+
+        const task_date: Date = new Date(getYear(now) + adder, month, day);
+        date_list.add(task_date);
     }
+}
+
+// スプレッドシートの内容を JSON で返す
+export function doGet(e: any) {
+    const params = JSON.parse(e.postData.getDataAsString());
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
+    const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
+
+    const fields = [];
+}
+
+export function doCreate(params: any) {
+    const homework: string = params.homework;
+    const subject: string = params.subject;
+    const month: number = params.month;
+    const day: number = params.day;
 }
 
 // スプレッドシートに内容を追記するまたは内容を削除する
@@ -41,10 +68,7 @@ export function doPost(e: any) {
     const post_type = params.command;
 
     if (post_type == "create") {
-        const homework: string = params.homework;
-        const subject: string = params.subject;
-        const month: number = params.month;
-        const day: number = params.day;
+        doCreate(params);
     }
 
     if (post_type == "delete") {
