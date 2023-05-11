@@ -1,3 +1,6 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import { ActionRowBuilder, Events, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } from "discord.js";
 import axios, { isCancel, AxiosError } from "axios";
 
@@ -73,7 +76,7 @@ module.exports = {
             "day": day_num
         }
 
-        axios.post("gasurl", json)
+        axios.post(process.env.postURL!, json)
             .then(response => {
                 console.log(response.data);
             })
