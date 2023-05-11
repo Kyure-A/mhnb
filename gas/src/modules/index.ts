@@ -79,7 +79,8 @@ export function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any)
     const subject: string = params.subject;
     const month: number = params.month;
     const day: number = params.day;
-    sheet.appendRow([homework, subject, month, day]);
+    const description: string = params.description;
+    sheet.appendRow([homework, subject, month, day, description]);
 }
 
 export function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
