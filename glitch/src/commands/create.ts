@@ -1,4 +1,5 @@
 import { ActionRowBuilder, Events, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } from "discord.js";
+import axios, { isCancel, AxiosError } from "axios";
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -50,5 +51,34 @@ module.exports = {
 
             await interaction.showModal(modal);
         }
+    },
+
+    modal: async function(interaction: any) {
+        if (!interaction.isModalSubmit()) return;
+
+        // Get the data entered by the user
+        const homework: string = interaction.fields.getTextInputValue("homework_name");
+        const subject: string = interaction.fields.getTextInputValue("subject_name");
+        const month: string = interaction.fields.getTextInputValue("month");
+        const day: string = interaction.fields.getTextInputValue("day");
+
+        const month_num: number = parseInt(month);
+        const day_num: number = parseInt(day);
+
+        const json = {
+            "command": "create",
+            "homework": homework,
+            "subject": subject,
+            "month": month_num,
+            "day": day_num
+        }
+
+        axios.post("gasurl", json)
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            })
     }
 }
