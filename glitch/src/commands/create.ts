@@ -3,6 +3,7 @@ dotenv.config();
 
 import { ActionRowBuilder, Events, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } from "discord.js";
 import axios, { isCancel, AxiosError } from "axios";
+import { describe } from "node:test";
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -43,6 +44,13 @@ module.exports = {
                 .setMinLength(1)
                 .setMaxLength(2)
                 .setStyle(TextInputStyle.Short);
+            const description = new TextInputBuilder()
+                .setCustomId("description")
+                .setLabel("説明")
+                .setPlaceholder("")
+                .setMinLength(1)
+                .setMaxLength(100)
+                .setStyle(TextInputStyle.Paragraph);
 
 
             modal.addComponents(
@@ -50,6 +58,7 @@ module.exports = {
                 new ActionRowBuilder<TextInputBuilder>().addComponents(subject_name),
                 new ActionRowBuilder<TextInputBuilder>().addComponents(month),
                 new ActionRowBuilder<TextInputBuilder>().addComponents(day),
+                new ActionRowBuilder<TextInputBuilder>().addComponents(description),
             )
 
             await interaction.showModal(modal);
@@ -64,6 +73,7 @@ module.exports = {
         const subject: string = interaction.fields.getTextInputValue("subject_name");
         const month: string = interaction.fields.getTextInputValue("month");
         const day: string = interaction.fields.getTextInputValue("day");
+        const description: string = interaction.fields.getTextInputValue("description");
 
         const month_num: number = parseInt(month);
         const day_num: number = parseInt(day);
@@ -73,7 +83,8 @@ module.exports = {
             "homework": homework,
             "subject": subject,
             "month": month_num,
-            "day": day_num
+            "day": day_num,
+            "description": description
         }
 
         await axios.post(process.env.gas_url!, json)
