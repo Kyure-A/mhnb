@@ -12,10 +12,14 @@ module.exports = {
         if (interaction.commandName == "list") {
 
             try {
-                const fields = await axios.get(process.env.gas_url!).data;
-                const embed = new EmbedBuilder()
-                    .setTitle("")
-                    .setFields(fields);
+                axios.get(process.env.gas_url!)
+                    .then(function(response) {
+                        const fields = response.data;
+                        const embed = new EmbedBuilder()
+                            .setTitle("")
+                            .setFields(fields);
+                        interaction.channel.send({ embed: [embed] });
+                    })
             }
             catch (error) {
                 console.error(error);

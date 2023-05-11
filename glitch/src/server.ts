@@ -42,7 +42,7 @@ client.on(Events.InteractionCreate, async interaction => {
     else if (interaction.commandName === list.data.name) {
 
         try {
-            await list.execute(client, interaction);
+            await list.execute(interaction);
         }
 
         catch (error) {

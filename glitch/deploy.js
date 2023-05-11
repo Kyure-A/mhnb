@@ -26,22 +26,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const discord_js_1 = require("discord.js");
-// import { createRequire } from "module";
-// const require = createRequire(import.meta.url);
 const create = require("./commands/create");
 const list = require("./commands/list");
+const del = require("./commands/delete"); // yoyakugo datta
 const commands = [
     create.data.toJSON(),
-    list.data.toJSON()
+    list.data.toJSON(),
+    del.data.toJSON()
 ];
 const rest = new discord_js_1.REST({ version: '10' }).setToken(process.env.token);
 async function main() {
     try {
         await rest.put(discord_js_1.Routes.applicationGuildCommands(process.env.application_id, process.env.guild_id), { body: commands });
-        console.log("Successful! Your commands are deployed.");
+        console.log("Successful! Commands are deployed.");
     }
     catch (error) {
-        console.error("An error occurred. Please check your code.");
+        console.error("An error occurred. Please check code.");
     }
 }
 main().catch(err => console.log(err));
