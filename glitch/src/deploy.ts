@@ -1,17 +1,16 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
-import { SlashCommandBuilder, REST, Routes } from "discord.js";
-import { APIUser } from "discord-api-types/v10"
-// import { createRequire } from "module";
-// const require = createRequire(import.meta.url);
+import { REST, Routes } from "discord.js";
 
 const create = require("./commands/create");
 const list = require("./commands/list");
+const del = require("./commands/delete"); // yoyakugo datta
 
 const commands: any[] = [
     create.data.toJSON(),
-    list.data.toJSON()
+    list.data.toJSON(),
+    del.data.toJSON()
 ];
 
 const rest = new REST({ version: '10' }).setToken(process.env.token!)
@@ -23,10 +22,10 @@ async function main() {
             { body: commands }
         );
 
-        console.log("Successful! Your commands are deployed.")
+        console.log("Successful! Commands are deployed.")
     }
     catch (error) {
-        console.error("An error occurred. Please check your code.")
+        console.error("An error occurred. Please check code.")
     }
 }
 

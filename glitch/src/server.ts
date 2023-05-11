@@ -5,7 +5,8 @@ import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
 
 const create = require("./commands/create");
 const list = require("./commands/list");
-const cdelete = require("./commands/delete"); // yoyakugo datta
+const del = require("./commands/delete"); // yoyakugo datta
+
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.once(Events.ClientReady, () => {
@@ -41,7 +42,7 @@ client.on(Events.InteractionCreate, async interaction => {
     else if (interaction.commandName === list.data.name) {
 
         try {
-            await list.execute(interaction);
+            await list.execute(client, interaction);
         }
 
         catch (error) {
@@ -58,10 +59,10 @@ client.on(Events.InteractionCreate, async interaction => {
         }
     }
 
-    else if (interaction.commandName === cdelete.data.name) {
+    else if (interaction.commandName === del.data.name) {
 
         try {
-            await cdelete.execute(interaction);
+            await del.execute(interaction);
         }
 
         catch (error) {
