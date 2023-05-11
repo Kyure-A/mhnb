@@ -62,7 +62,7 @@ export function taskBuilder(value: any[][]) {
 
         if (task_array !== undefined) {
 
-            for (const task of task_array) {
+            for (const task of task_array.values()) {
                 task.name = "[${counter}] " + task.name;
                 fields.push(task);
                 counter++;
@@ -87,7 +87,6 @@ export function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
 
 // "/list"
 export function doGet(e: any) {
-    const params = JSON.parse(e.postData.getDataAsString());
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
 
