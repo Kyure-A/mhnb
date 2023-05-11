@@ -18,7 +18,12 @@ module.exports = {
                         const embed = new EmbedBuilder()
                             .setTitle("")
                             .setFields(fields);
-                        interaction.channel.send({ embed: [embed] });
+                        interaction.reply({ embed: [embed] });
+
+                        console.log();
+                    })
+                    .catch(function(error) {
+                        console.log(error);
                     })
             }
             catch (error) {
