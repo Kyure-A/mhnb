@@ -7,7 +7,7 @@ const create = require("./commands/create");
 const list = require("./commands/list");
 const del = require("./commands/delete"); // yoyakugo datta
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
 client.once(Events.ClientReady, () => {
     console.log("Ready");
