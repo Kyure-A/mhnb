@@ -78,10 +78,10 @@ module.exports = {
 
         axios.post(process.env.postURL!, json)
             .then(response => {
-                console.log(response.data);
+                console.log(response);
             })
             .catch(error => {
-                console.error(error);
+                console.error(error.response);
             })
     }
 }
