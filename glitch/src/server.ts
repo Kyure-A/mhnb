@@ -89,6 +89,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
     try {
         await create.modal(interaction);
+        console.log("Modal is send.")
     }
 
     catch (error) {
