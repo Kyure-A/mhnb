@@ -1,5 +1,6 @@
 import formatDistance from "date-fns/formatDistance"
 import getYear from 'date-fns/getYear'
+import min from 'date-fns/min'
 
 export function wakeGlitch(): void {
     const glitch_url: string | null = PropertiesService.getDocumentProperties().getProperty("glitch_url");
@@ -20,7 +21,11 @@ type Field = {
     inline: boolean
 }
 
-export function sortTask(value: any[][]) {
+export function sortTask(date_list: Set<Date>, tasks: Map<Date, Field[]>) {
+    const date_list_array: Date[] = Array.from(date_list);
+}
+
+export function taskBuilder(value: any[][]) {
     const date_list = new Set<Date>();
     const tasks = new Map<Date, Field[]>();
     const now: Date = new Date();
@@ -43,7 +48,15 @@ export function sortTask(value: any[][]) {
 
         const task_date: Date = new Date(getYear(now) + adder, month, day);
         date_list.add(task_date);
+        // push "task" to map with Key ("task_date")
     }
+}
+
+export function doCreate(params: any) {
+    const homework: string = params.homework;
+    const subject: string = params.subject;
+    const month: number = params.month;
+    const day: number = params.day;
 }
 
 // スプレッドシートの内容を JSON で返す
@@ -53,13 +66,6 @@ export function doGet(e: any) {
     const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
 
     const fields = [];
-}
-
-export function doCreate(params: any) {
-    const homework: string = params.homework;
-    const subject: string = params.subject;
-    const month: number = params.month;
-    const day: number = params.day;
 }
 
 // スプレッドシートに内容を追記するまたは内容を削除する
@@ -75,3 +81,4 @@ export function doPost(e: any) {
 
     }
 }
+
