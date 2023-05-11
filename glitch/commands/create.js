@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
+const axios_1 = __importDefault(require("axios"));
 module.exports = {
     data: new discord_js_1.SlashCommandBuilder()
         .setName('create')
@@ -42,5 +46,30 @@ module.exports = {
             modal.addComponents(new discord_js_1.ActionRowBuilder().addComponents(homework_name), new discord_js_1.ActionRowBuilder().addComponents(subject_name), new discord_js_1.ActionRowBuilder().addComponents(month), new discord_js_1.ActionRowBuilder().addComponents(day));
             await interaction.showModal(modal);
         }
+    },
+    modal: async function (interaction) {
+        if (!interaction.isModalSubmit())
+            return;
+        // Get the data entered by the user
+        const homework = interaction.fields.getTextInputValue("homework_name");
+        const subject = interaction.fields.getTextInputValue("subject_name");
+        const month = interaction.fields.getTextInputValue("month");
+        const day = interaction.fields.getTextInputValue("day");
+        const month_num = parseInt(month);
+        const day_num = parseInt(day);
+        const json = {
+            "command": "create",
+            "homework": homework,
+            "subject": subject,
+            "month": month_num,
+            "day": day_num
+        };
+        axios_1.default.post("gasurl", json)
+            .then(response => {
+            console.log(response.data);
+        })
+            .catch(error => {
+            console.error(error);
+        });
     }
 };

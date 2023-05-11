@@ -84,22 +84,12 @@ client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
     }
 });
 // create (modal)
-client.on(discord_js_1.Events.InteractionCreate, interaction => {
-    if (!interaction.isModalSubmit())
-        return;
-    // Get the data entered by the user
-    const homework = interaction.fields.getTextInputValue("homework_name");
-    const subject = interaction.fields.getTextInputValue("subject_name");
-    const month = interaction.fields.getTextInputValue("month");
-    const day = interaction.fields.getTextInputValue("day");
-    const month_num = parseInt(month);
-    const day_num = parseInt(day);
-    const json = {
-        "command": "create",
-        "homework": homework,
-        "subject": subject,
-        "month": month_num,
-        "day": day_num
-    };
+client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
+    try {
+        await create.modal(interaction);
+    }
+    catch (error) {
+        console.error(error);
+    }
 });
 client.login(process.env.token);
