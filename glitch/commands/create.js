@@ -96,5 +96,6 @@ module.exports = {
             .catch(error => {
             console.error(error);
         });
+        await interaction.reply(`課題「${homework}」が追加されました！`);
     }
 };
