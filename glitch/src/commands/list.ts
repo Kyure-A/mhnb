@@ -21,7 +21,7 @@ module.exports = {
                     const fields = response.data;
                     embed = new EmbedBuilder()
                         .setTitle("課題リスト")
-                        .setFields(fields);
+                        .addFields(fields);
 
                     console.log("OK");
                 })

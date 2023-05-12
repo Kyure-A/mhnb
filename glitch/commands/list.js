@@ -20,7 +20,7 @@ module.exports = {
                 const fields = response.data;
                 embed = new discord_js_1.EmbedBuilder()
                     .setTitle("課題リスト")
-                    .setFields(fields);
+                    .addFields(fields);
                 console.log("OK");
             })
                 .catch(function (error) {
