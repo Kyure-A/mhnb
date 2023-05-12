@@ -13,6 +13,8 @@ module.exports = {
 
             let embed;
 
+            await interaction.deferReply();
+
             await axios.get(process.env.gas_url!)
                 .then(function(response) {
 
@@ -27,7 +29,7 @@ module.exports = {
                     console.log(error);
                 })
 
-            await interaction.reply({ embed: [embed] });
+            await interaction.editReply({ embed: [embed] });
         }
     }
 }
