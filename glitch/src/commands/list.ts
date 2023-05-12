@@ -16,16 +16,16 @@ module.exports = {
             let embed;
 
             await axios.get(process.env.gas_url!)
-                .then(function(response) {
+                .then(response => {
 
                     const fields = JSON.parse(response.data);
                     embed = new EmbedBuilder()
                         .setTitle("課題リスト")
                         .setFields(fields);
 
-                    console.log("OK");
+                    console.log("/list is completed");
                 })
-                .catch(function(error) {
+                .catch(error => {
                     console.log(error);
                 })
 

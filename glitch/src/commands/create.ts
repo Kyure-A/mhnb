@@ -91,6 +91,7 @@ module.exports = {
             .then(response => {
                 console.log(response.data);
                 interaction.reply(`課題「${homework}」が追加されました！`);
+                console.log("Modal is send.")
             })
             .catch(error => {
                 console.error(error);
