@@ -26,7 +26,7 @@ module.exports = {
                 .catch(error => {
                 console.log(error);
             });
-            await interaction.editReply({ embed: [embed] });
+            interaction.reply({ embed: [embed] });
         }
     }
 };
