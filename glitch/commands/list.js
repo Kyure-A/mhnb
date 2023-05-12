@@ -13,18 +13,19 @@ module.exports = {
         if (!interaction.isChatInputCommand())
             return;
         if (interaction.commandName == "list") {
+            let embed;
             await axios_1.default.get(process.env.gas_url)
                 .then(function (response) {
                 const fields = response.data;
-                const embed = new discord_js_1.EmbedBuilder()
+                embed = new discord_js_1.EmbedBuilder()
                     .setTitle("課題リスト")
                     .setFields(fields);
-                interaction.reply({ embed: [embed] });
                 console.log("OK");
             })
                 .catch(function (error) {
                 console.log(error);
             });
+            await interaction.reply({ embed: [embed] });
         }
     }
 };
