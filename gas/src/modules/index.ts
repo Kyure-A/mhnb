@@ -101,9 +101,9 @@ export async function doGet() {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
 
-    const fields: Field[] = await taskBuilder(value);
+    const fields: Field[] = await taskBuilder(value); // promise 
 
-    return ContentService.createTextOutput(JSON.stringify(fields))
+    return ContentService.createTextOutput().setContent(JSON.stringify(fields)).setMimeType(ContentService.MimeType.JSON);
 }
 
 // "/create", "/delete"
