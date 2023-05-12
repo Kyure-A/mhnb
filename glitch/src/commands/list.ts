@@ -29,7 +29,7 @@ module.exports = {
                     console.log(error);
                 })
 
-            await interaction.editReply({ embed: [embed] });
+            await interaction.editReply({ embed: embed });
         }
     }
 }
