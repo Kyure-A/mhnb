@@ -29,8 +29,8 @@ export function pushToMap(map: Map<any, any[]>, key: any, value: any) {
 }
 
 export async function taskBuilder(value: any[][]) {
-    let date_set = new Set<number>();
-    let task_map = new Map<number, Field[]>();
+    let date_set: Set<number> = new Set<number>();
+    let task_map: Map<number, Field[]> = new Map<number, Field[]>();
     const now: Date = new Date();
 
     for (let i = 0; i < value.length; i++) {
@@ -51,7 +51,14 @@ export async function taskBuilder(value: any[][]) {
 
         const task_date: number = parseInt(format(new Date(getYear(now) + adder, month, day), "yyMMdd"));
         date_set.add(task_date);
-        pushToMap(task_map, task_date, task);
+
+        if (task_map.has(task_date) && task_map !== undefined) task_map.get(task_date)!.push(task);
+        else {
+            task_map.set(task_date, []);
+            task_map.get(task_date)!.push(task);
+        }
+
+        // pushToMap(task_map, task_date, task);
     }
 
     let date_array: number[] = Array.from(date_set).sort();
@@ -94,9 +101,9 @@ export async function doGet() {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
 
-    const fields = await taskBuilder(value);
+    const fields: Field[] = await taskBuilder(value);
 
-    return ContentService.createTextOutput(JSON.stringify(fields)).setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify(fields))
 }
 
 // "/create", "/delete"
@@ -116,4 +123,3 @@ export async function doPost(e: any) {
 
     return ContentService.createTextOutput("");
 }
-
