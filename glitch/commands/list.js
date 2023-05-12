@@ -16,7 +16,7 @@ module.exports = {
             await interaction.deferReply();
             await axios_1.default.get(process.env.gas_url)
                 .then(function (response) {
-                const fields = response.data;
+                const fields = JSON.parse(response.data);
                 const embed = new discord_js_1.EmbedBuilder()
                     .setTitle("課題リスト")
                     .setFields(fields);

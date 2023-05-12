@@ -16,7 +16,7 @@ module.exports = {
             await axios.get(process.env.gas_url!)
                 .then(function(response) {
 
-                    const fields = response.data;
+                    const fields = JSON.parse(response.data);
                     const embed = new EmbedBuilder()
                         .setTitle("課題リスト")
                         .setFields(fields);
