@@ -20,13 +20,13 @@ module.exports = {
                 const fields = response.data;
                 embed = new discord_js_1.EmbedBuilder()
                     .setTitle("課題リスト")
-                    .addFields(fields);
+                    .setFields(fields);
                 console.log("OK");
             })
                 .catch(function (error) {
                 console.log(error);
             });
-            await interaction.editReply({ embed: embed });
+            await interaction.editReply({ embed: [embed] });
         }
     }
 };

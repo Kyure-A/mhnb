@@ -21,7 +21,7 @@ module.exports = {
                     const fields = response.data;
                     embed = new EmbedBuilder()
                         .setTitle("課題リスト")
-                        .addFields(fields);
+                        .setFields(fields);
 
                     console.log("OK");
                 })
@@ -29,7 +29,7 @@ module.exports = {
                     console.log(error);
                 })
 
-            await interaction.editReply({ embed: embed });
+            await interaction.editReply({ embed: [embed] });
         }
     }
 }
