@@ -17,6 +17,7 @@ module.exports = {
             let embed;
             await axios_1.default.get(process.env.gas_url)
                 .then(function (response) {
+                interaction.editReply(response.data);
                 const fields = JSON.parse(response.data);
                 embed = new discord_js_1.EmbedBuilder()
                     .setTitle("課題リスト")
@@ -26,7 +27,6 @@ module.exports = {
                 .catch(function (error) {
                 console.log(error);
             });
-            interaction.editReply({ embed: [embed] });
         }
     }
 };

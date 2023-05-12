@@ -17,7 +17,7 @@ module.exports = {
 
             await axios.get(process.env.gas_url!)
                 .then(function(response) {
-
+                    interaction.editReply(response.data);
                     const fields = JSON.parse(response.data);
                     embed = new EmbedBuilder()
                         .setTitle("課題リスト")
@@ -28,8 +28,6 @@ module.exports = {
                 .catch(function(error) {
                     console.log(error);
                 })
-
-            interaction.editReply({ embed: [embed] });
         }
     }
 }
