@@ -1,4 +1,4 @@
-import { ActionRowBuilder, Client, Events, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import axios, { isCancel, AxiosError } from "axios";
 
 module.exports = {
@@ -13,18 +13,17 @@ module.exports = {
 
             await interaction.deferReply();
 
-            try {
-                const response = await axios.get(process.env.gas_url!);
-
-                const fields = await JSON.parse(response.data);
-                const embed = new EmbedBuilder()
-                    .setTitle("課題リスト")
-                    .setFields(fields);
-                await interaction.editReply({ embed: [embed] });
-            }
-            catch (error) {
-                console.log(error);
-            }
+            await axios.get(process.env.gas_url!)
+                .then(response => {
+                    const fields = JSON.parse(response.data);
+                    const embed = new EmbedBuilder()
+                        .setTitle("課題リスト")
+                        .setFields(fields);
+                    interaction.editReply({ embed: [embed] });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     }
 }

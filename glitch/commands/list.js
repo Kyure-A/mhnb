@@ -14,17 +14,17 @@ module.exports = {
             return;
         if (interaction.commandName == "list") {
             await interaction.deferReply();
-            try {
-                const response = await axios_1.default.get(process.env.gas_url);
-                const fields = await JSON.parse(response.data);
+            await axios_1.default.get(process.env.gas_url)
+                .then(response => {
+                const fields = JSON.parse(response.data);
                 const embed = new discord_js_1.EmbedBuilder()
                     .setTitle("課題リスト")
                     .setFields(fields);
-                await interaction.editReply({ embed: [embed] });
-            }
-            catch (error) {
-                console.log(error);
-            }
+                interaction.editReply({ embed: [embed] });
+            })
+                .catch(error => {
+                console.error(error);
+            });
         }
     }
 };
