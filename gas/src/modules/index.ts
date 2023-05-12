@@ -23,8 +23,8 @@ type Field = {
     inline: boolean
 }
 
-export function pushToMap(map: Map<any, any>, key: any, value: any) {
-    if (map.has(key)) map.get(key).push(value);
+export function pushToMap(map: Map<any, any[]>, key: any, value: any) {
+    if (map.has(key) && map !== undefined) map.get(key)!.push(value);
     else map.set(key, value);
 }
 
