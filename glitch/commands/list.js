@@ -13,23 +13,18 @@ module.exports = {
         if (!interaction.isChatInputCommand())
             return;
         if (interaction.commandName == "list") {
-            try {
-                axios_1.default.get(process.env.gas_url)
-                    .then(function (response) {
-                    const fields = response.data;
-                    const embed = new discord_js_1.EmbedBuilder()
-                        .setTitle("課題リスト")
-                        .setFields(fields);
-                    interaction.reply({ embed: [embed] });
-                    console.log("OK");
-                })
-                    .catch(function (error) {
-                    console.log(error);
-                });
-            }
-            catch (error) {
-                console.error(error);
-            }
+            await axios_1.default.get(process.env.gas_url)
+                .then(function (response) {
+                const fields = response.data;
+                const embed = new discord_js_1.EmbedBuilder()
+                    .setTitle("課題リスト")
+                    .setFields(fields);
+                interaction.reply({ embed: [embed] });
+                console.log("OK");
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
         }
     }
 };
