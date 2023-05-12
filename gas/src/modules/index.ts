@@ -73,7 +73,7 @@ export async function taskBuilder(value: any[][]) {
 
             for (let j = 0; j < task_array.length; j++) {
                 let task = task_array[j];
-                task.name = "[${counter}] " + task.name;
+                task.name = `(${counter}) ` + task.name;
                 fields.push(task);
                 counter++;
             }
