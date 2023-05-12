@@ -13,23 +13,18 @@ module.exports = {
 
             await interaction.deferReply();
 
-            let embed;
+            try {
+                const response = await axios.get(process.env.gas_url!);
 
-            await axios.get(process.env.gas_url!)
-                .then(response => {
-
-                    const fields = JSON.parse(response.data);
-                    embed = new EmbedBuilder()
-                        .setTitle("課題リスト")
-                        .setFields(fields);
-
-                    console.log("/list is completed");
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-
-            interaction.editReply({ embed: [embed] });
+                const fields = JSON.parse(response.data);
+                const embed = new EmbedBuilder()
+                    .setTitle("課題リスト")
+                    .setFields(fields);
+                await interaction.editReply({ embed: [embed] });
+            }
+            catch (error) {
+                console.log(error);
+            }
         }
     }
 }
