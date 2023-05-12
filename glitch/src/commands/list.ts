@@ -11,26 +11,21 @@ module.exports = {
 
         if (interaction.commandName == "list") {
 
-            try {
-                axios.get(process.env.gas_url!)
-                    .then(function(response) {
+            await axios.get(process.env.gas_url!)
+                .then(function(response) {
 
-                        const fields = response.data;
-                        const embed = new EmbedBuilder()
-                            .setTitle("課題リスト")
-                            .setFields(fields);
+                    const fields = response.data;
+                    const embed = new EmbedBuilder()
+                        .setTitle("課題リスト")
+                        .setFields(fields);
 
-                        interaction.reply({ embed: [embed] });
+                    interaction.reply({ embed: [embed] });
 
-                        console.log("OK");
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    })
-            }
-            catch (error) {
-                console.error(error);
-            }
+                    console.log("OK");
+                })
+                .catch(function(error) {
+                    console.log(error);
+                })
         }
     }
 }
