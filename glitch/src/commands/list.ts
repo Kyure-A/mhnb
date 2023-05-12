@@ -29,7 +29,7 @@ module.exports = {
                     console.log(error);
                 })
 
-            interaction.reply({ embed: [embed] });
+            interaction.editReply({ embed: [embed] });
         }
     }
 }
