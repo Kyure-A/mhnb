@@ -44,10 +44,10 @@ client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
         catch (error) {
             console.error(error);
             if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: "error", ephemeral: true });
+                await interaction.followUp({ content: "返信または応答準備中にエラーが発生しました", ephemeral: true });
             }
             else {
-                await interaction.reply({ content: "error", ephemeral: true });
+                await interaction.reply({ content: "何もできませんでした", ephemeral: true });
             }
         }
     }
@@ -58,10 +58,10 @@ client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
         catch (error) {
             console.error(error);
             if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: "error", ephemeral: true });
+                await interaction.followUp({ content: "返信または応答準備中にエラーが発生しました", ephemeral: true });
             }
             else {
-                await interaction.reply({ content: "error", ephemeral: true });
+                await interaction.reply({ content: "何もできませんでした", ephemeral: true });
             }
         }
     }
@@ -72,10 +72,10 @@ client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
         catch (error) {
             console.error(error);
             if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({ content: "error", ephemeral: true });
+                await interaction.followUp({ content: "返信または応答準備中にエラーが発生しました", ephemeral: true });
             }
             else {
-                await interaction.reply({ content: "error", ephemeral: true });
+                await interaction.reply({ content: "何もできませんでした", ephemeral: true });
             }
         }
     }
