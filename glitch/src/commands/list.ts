@@ -11,25 +11,23 @@ module.exports = {
 
         if (interaction.commandName == "list") {
 
-            let embed;
-
             await interaction.deferReply();
 
             await axios.get(process.env.gas_url!)
                 .then(function(response) {
 
                     const fields = response.data;
-                    embed = new EmbedBuilder()
+                    const embed = new EmbedBuilder()
                         .setTitle("課題リスト")
                         .setFields(fields);
+
+                    interaction.editReply({ embed: [embed] });
 
                     console.log("OK");
                 })
                 .catch(function(error) {
                     console.log(error);
                 })
-
-            await interaction.editReply({ embed: [embed] });
         }
     }
 }
