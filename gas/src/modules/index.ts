@@ -1,6 +1,8 @@
 import formatDistance from "date-fns/formatDistance"
 import getYear from "date-fns/getYear"
 import compareAsc from "date-fns/compareAsc"
+import { format } from 'date-fns'
+import ja from 'date-fns/locale/ja'
 
 export function wakeGlitch(): void {
     const glitch_url: string | null = PropertiesService.getDocumentProperties().getProperty("glitch_url");
@@ -26,9 +28,9 @@ export function pushToMap(map: Map<any, any>, key: any, value: any) {
     else map.set(key, value);
 }
 
-export function taskBuilder(value: any[][]) {
-    let date_set = new Set<Date>();
-    let task_map = new Map<Date, Field[]>();
+export async function taskBuilder(value: any[][]) {
+    let date_set = new Set<number>();
+    let task_map = new Map<number, Field[]>();
     const now: Date = new Date();
 
     for (let i = 0; i < value.length; i++) {
@@ -47,12 +49,12 @@ export function taskBuilder(value: any[][]) {
         let adder: 0 | 1 = 0;
         if (now.getMonth() > month) adder = 1;
 
-        const task_date: Date = new Date(getYear(now) + adder, month, day);
+        const task_date: number = parseInt(format(new Date(getYear(now) + adder, month, day), "yyMMdd"));
         date_set.add(task_date);
         pushToMap(task_map, task_date, task);
     }
 
-    let date_array: Date[] = Array.from(date_set).sort(compareAsc);
+    let date_array: number[] = Array.from(date_set).sort();
 
     let fields: Field[] = [];
 
@@ -92,7 +94,7 @@ export async function doGet() {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
 
-    const fields = taskBuilder(value);
+    const fields = await taskBuilder(value);
 
     return ContentService.createTextOutput(JSON.stringify(fields)).setMimeType(ContentService.MimeType.JSON);
 }
