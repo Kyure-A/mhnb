@@ -101,10 +101,10 @@ export async function doGet() {
 export async function doPost(e: any) {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const params = await JSON.parse(e.postData.getDataAsString());
-    const post_type: string = params.command;
+    const post_type: string = await params.command;
 
     if (post_type == "create") {
-        doCreate(sheet!, params);
+        await doCreate(sheet!, params);
     }
 
 
