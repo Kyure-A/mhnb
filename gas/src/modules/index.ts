@@ -84,7 +84,7 @@ export function doGet(): GoogleAppsScript.Content.TextOutput {
 }
 
 // "/create", "/delete"
-export async function doPost(e: any) {
+export async function doPost(e: any): GoogleAppsScript.Content.TextOutput {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const params: JsonCreate = await JSON.parse(e.postData.getDataAsString());
     const post_type: string = params.command;
@@ -98,5 +98,7 @@ export async function doPost(e: any) {
 
     }
 
-    return ContentService.createTextOutput("");
+    const output = `/${post_type} による POST が受け取られました！`
+
+    return ContentService.createTextOutput(output);
 }
