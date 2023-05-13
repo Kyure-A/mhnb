@@ -9,7 +9,9 @@ module.exports = {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName == "delete") {
-
+            const modal: ModalBuilder = new ModalBuilder()
+                .setCustomId("modal")
+                .setTitle("課題削除フォーム");
         }
     }
 }

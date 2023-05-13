@@ -1,3 +1,5 @@
 node_modules/
 /gas/dist/bundle.js
 /gas/.clasp.json
+/glitch/commands/*.js
+/glitch/*.js
