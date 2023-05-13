@@ -18,7 +18,7 @@ module.exports = {
                     const fields: Field[] = JSON.parse(response.data);
                     const embed: EmbedBuilder = new EmbedBuilder()
                         .setTitle("課題リスト")
-                        .setFields(fields);
+                        .addFields(fields);
                     interaction.editReply({ embed: [embed] });
                 })
                 .catch(error => {

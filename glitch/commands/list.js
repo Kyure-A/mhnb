@@ -19,7 +19,7 @@ module.exports = {
                 const fields = JSON.parse(response.data);
                 const embed = new discord_js_1.EmbedBuilder()
                     .setTitle("課題リスト")
-                    .setFields(fields);
+                    .addFields(fields);
                 interaction.editReply({ embed: [embed] });
             })
                 .catch(error => {
