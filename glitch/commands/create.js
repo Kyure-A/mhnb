@@ -88,14 +88,12 @@ module.exports = {
         const month = await interaction.fields.getTextInputValue("month");
         const day = await interaction.fields.getTextInputValue("day");
         const description = await interaction.fields.getTextInputValue("description");
-        const month_num = parseInt(month);
-        const day_num = parseInt(day);
         const json = {
             "command": "create",
             "homework": homework,
             "subject": subject,
-            "month": month_num,
-            "day": day_num,
+            "month": month,
+            "day": day,
             "description": description
         };
         await axios_1.default.post(process.env.gas_url, json)
