@@ -18,7 +18,7 @@ module.exports = {
             const task_number: number = await interaction.options.getInteger("task_number")
 
             const json = {
-                "command": "create",
+                "command": "delete",
                 "task_number": task_number
             }
 

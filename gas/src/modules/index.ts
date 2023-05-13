@@ -19,10 +19,17 @@ export function sortSheet(sheet: GoogleAppsScript.Spreadsheet.Sheet): void {
     range.removeDuplicates();
 }
 
-export function taskBuilder(value: any[][]): Field[] {
+export function taskBuilder(sheet: GoogleAppsScript.Spreadsheet.Sheet): Field[] {
+    const value: string[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getDisplayValues();
+
+    sortSheet(sheet);
+
     let fields: Field[] = [];
 
     for (let i = 0; i < value.length; i++) {
+
+        if (value[i][0] == "") continue;
+
         const homework_name: string = value[i][0];
         const subject_name: string = value[i][1];
         const date_str: string = value[i][2];
@@ -80,9 +87,8 @@ export async function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet, params
 // "/list"
 export function doGet(): GoogleAppsScript.Content.TextOutput {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
-    const value: string[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getDisplayValues();
 
-    const fields: Field[] = taskBuilder(value);
+    const fields: Field[] = taskBuilder(sheet!);
 
     return ContentService.createTextOutput(JSON.stringify(fields)).setMimeType(ContentService.MimeType.JSON);
 }
