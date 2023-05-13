@@ -15,11 +15,11 @@ module.exports = {
 
             await axios.get(process.env.gas_url!)
                 .then(response => {
-                    const fields: Field[] = JSON.parse(JSON.stringify(response.data));
-                    const embed: EmbedBuilder = new EmbedBuilder()
+                    const fields: Field[] = JSON.parse(response.data);
+                    const embeds: EmbedBuilder = new EmbedBuilder()
                         .setTitle("課題リスト")
                         .addFields(fields);
-                    interaction.editReply({ embed: [embed] });
+                    interaction.editReply({ embeds: [embeds] });
                 })
                 .catch(error => {
                     console.error(error);
