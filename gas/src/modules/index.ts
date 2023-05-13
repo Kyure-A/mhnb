@@ -33,8 +33,10 @@ export function taskBuilder(value: any[][]): Field[] {
         const month: number = date.getMonth() + 1;
         const day: number = date.getDate();
 
+        const counter: number = i + 1;
+
         const field: Field = {
-            "name": `${subject_name}: ${homework_name} (${month}/${day})`,
+            "name": `[${counter}] ${subject_name}: ${homework_name} (${month}/${day})`,
             "value": description,
             "inline": false
         }
