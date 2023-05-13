@@ -27,7 +27,6 @@
   "dependencies": {
     "@types/date-fns": "^2.6.0",
     "@types/google-apps-script-oauth2": "^38.0.0",
-    "clasp": "^1.0.0",
-    "date-fns": "^2.30.0"
+    "clasp": "^1.0.0"
   }
 }
