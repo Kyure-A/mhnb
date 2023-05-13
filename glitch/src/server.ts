@@ -1,13 +1,13 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
-import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
+import { Client, Events, GatewayIntentBits } from "discord.js";
 
 const create = require("./commands/create");
 const list = require("./commands/list");
 const del = require("./commands/delete"); // yoyakugo datta
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+const client: Client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
 client.once(Events.ClientReady, () => {
     console.log("Ready");

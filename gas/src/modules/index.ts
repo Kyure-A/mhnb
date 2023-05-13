@@ -1,8 +1,6 @@
-import formatDistance from "date-fns/formatDistance"
+import { format } from "date-fns"
 import getYear from "date-fns/getYear"
-import compareAsc from "date-fns/compareAsc"
-import { format } from 'date-fns'
-import ja from 'date-fns/locale/ja'
+import ja from "date-fns/locale/ja"
 
 export function wakeGlitch(): void {
     const glitch_url: string | null = PropertiesService.getDocumentProperties().getProperty("glitch_url");
@@ -17,12 +15,6 @@ export function wakeGlitch(): void {
     console.log(response);
 }
 
-type Field = {
-    name: string,
-    value: string,
-    inline: boolean
-}
-
 export function taskBuilder(value: any[][]): Field[] {
     let date_set: Set<number> = new Set<number>();
     let task_map: Map<number, Field[]> = new Map<number, Field[]>();
@@ -31,9 +23,12 @@ export function taskBuilder(value: any[][]): Field[] {
     for (let i = 0; i < value.length; i++) {
         const homework_name: string = value[i][0];
         const subject_name: string = value[i][1];
-        const month: number = value[i][2];
-        const day: number = value[i][3];
+        const month_str: string = value[i][2];
+        const day_str: string = value[i][3];
         const description: string = value[i][4];
+
+        const month: number = parseInt(month_str);
+        const day: number = parseInt(day_str);
 
         const task: Field = {
             "name": `${subject_name}: ${homework_name} (${month}/${day})`,
@@ -42,9 +37,9 @@ export function taskBuilder(value: any[][]): Field[] {
         }
 
         let adder: 0 | 1 = 0;
-        if (now.getMonth() > month) adder = 1;
+        if (now.getMonth() > month) adder = 1; // その年度の課題しか想定していないので，1 年またぐ課題とかは無理
 
-        const task_date: number = parseInt(format(new Date(getYear(now) + adder, month, day), "yyMMdd"));
+        const task_date: number = parseInt(format(new Date(getYear(now) + adder, month, day), "yyMMdd", { locale: ja }));
         date_set.add(task_date);
 
         if (task_map.has(task_date) && task_map !== undefined) task_map.get(task_date)!.push(task);
@@ -79,9 +74,10 @@ export function taskBuilder(value: any[][]): Field[] {
 export async function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any): Promise<void> {
     const homework: string = await params.homework;
     const subject: string = await params.subject;
-    const month: number = await params.month;
-    const day: number = await params.day;
+    const month: string = await params.month;
+    const day: string = await params.day;
     const description: string = await params.description;
+
     sheet.appendRow([homework, subject, month, day, description]);
 }
 
@@ -92,9 +88,9 @@ export function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
 // "/list"
 export function doGet(): GoogleAppsScript.Content.TextOutput {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
-    const value: any[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getValues();
+    const value: string[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getDisplayValues();
 
-    const fields = taskBuilder(value);
+    const fields: Field[] = taskBuilder(value);
 
     return ContentService.createTextOutput(JSON.stringify(fields)).setMimeType(ContentService.MimeType.JSON);
 }
@@ -102,8 +98,8 @@ export function doGet(): GoogleAppsScript.Content.TextOutput {
 // "/create", "/delete"
 export async function doPost(e: any) {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
-    const params = await JSON.parse(e.postData.getDataAsString());
-    const post_type: string = await params.command;
+    const params: JsonCreate = await JSON.parse(e.postData.getDataAsString());
+    const post_type: string = params.command;
 
     if (post_type == "create") {
         await doCreate(sheet!, params);

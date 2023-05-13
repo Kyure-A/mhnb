@@ -14,37 +14,37 @@ module.exports = {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName == "create") {
-            const modal = new ModalBuilder()
+            const modal: ModalBuilder = new ModalBuilder()
                 .setCustomId("modal")
                 .setTitle("課題入力フォーム");
-            const homework_name = new TextInputBuilder()
+            const homework_name: TextInputBuilder = new TextInputBuilder()
                 .setCustomId("homework_name")
                 .setLabel("課題名")
                 .setMinLength(1)
                 .setMaxLength(30)
                 .setStyle(TextInputStyle.Short);
-            const subject_name = new TextInputBuilder()
+            const subject_name: TextInputBuilder = new TextInputBuilder()
                 .setCustomId("subject_name")
                 .setLabel("教科名")
                 .setPlaceholder("シラバスに載っている正式名称で入力してください")
                 .setMinLength(1)
                 .setMaxLength(20)
                 .setStyle(TextInputStyle.Short);
-            const month = new TextInputBuilder()
+            const month: TextInputBuilder = new TextInputBuilder()
                 .setCustomId("month")
                 .setLabel("期限 (月)")
                 .setPlaceholder("月を 1 - 12 で入力してください")
                 .setMinLength(1)
                 .setMaxLength(2)
                 .setStyle(TextInputStyle.Short);
-            const day = new TextInputBuilder()
+            const day: TextInputBuilder = new TextInputBuilder()
                 .setCustomId("day")
                 .setLabel("期限 (日)")
                 .setPlaceholder("日を 1 - 31 で入力してください")
                 .setMinLength(1)
                 .setMaxLength(2)
                 .setStyle(TextInputStyle.Short);
-            const description = new TextInputBuilder()
+            const description: TextInputBuilder = new TextInputBuilder()
                 .setCustomId("description")
                 .setLabel("説明")
                 .setPlaceholder("")
@@ -75,15 +75,12 @@ module.exports = {
         const day: string = await interaction.fields.getTextInputValue("day");
         const description: string = await interaction.fields.getTextInputValue("description");
 
-        const month_num: number = parseInt(month);
-        const day_num: number = parseInt(day);
-
-        const json = {
+        const json: JsonCreate = {
             "command": "create",
             "homework": homework,
             "subject": subject,
-            "month": month_num,
-            "day": day_num,
+            "month": month,
+            "day": day,
             "description": description
         }
 
