@@ -24,6 +24,7 @@ module.exports = {
             })
                 .catch(error => {
                 console.error(error);
+                interaction.editReply("axios in list.js threw error");
             });
         }
     }
