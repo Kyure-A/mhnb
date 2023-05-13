@@ -1,7 +1,3 @@
-import { format } from "date-fns"
-import getYear from "date-fns/getYear"
-import ja from "date-fns/locale/ja"
-
 export function wakeGlitch(): void {
     const glitch_url: string | null = PropertiesService.getDocumentProperties().getProperty("glitch_url");
     const data = {};
@@ -39,7 +35,7 @@ export function taskBuilder(value: any[][]): Field[] {
         let adder: 0 | 1 = 0;
         if (now.getMonth() > month) adder = 1; // その年度の課題しか想定していないので，1 年またぐ課題とかは無理
 
-        const task_date: number = parseInt(format(new Date(getYear(now) + adder, month, day), "yyMMdd", { locale: ja }));
+        const task_date: number = parseInt(Utilities.formatDate(new Date(now.getFullYear() + adder, month, day), "JST", "yyMMdd"));
         date_set.add(task_date);
 
         if (task_map.has(task_date) && task_map !== undefined) task_map.get(task_date)!.push(task);
