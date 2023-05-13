@@ -1,25 +1,32 @@
-const { SlashCommandBuilder, REST, Routes } = require("discord.js");
-import { APIUser } from "discord-api-types/v10"
-import fs from "node:fs";
-require("dotenv").config();
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const commands: any[] = [];
-const files = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+import { REST, Routes } from "discord.js";
 
-for (const file of files) {
-    const command = require(`./commands/${file}`);
-    commands.push(command.data.toJSON());
-}
+const create = require("./commands/create");
+const list = require("./commands/list");
+const del = require("./commands/delete"); // yoyakugo datta
 
-//登録用関数
+const commands: any[] = [
+    create.data.toJSON(),
+    list.data.toJSON(),
+    del.data.toJSON()
+];
 
 const rest = new REST({ version: '10' }).setToken(process.env.token!)
 
 async function main() {
-    await rest.put(
-        Routes.applicationCommands(process.env.application_id!),
-        { body: commands }
-    )
+    try {
+        await rest.put(
+            Routes.applicationGuildCommands(process.env.application_id!, process.env.guild_id!),
+            { body: commands }
+        );
+
+        console.log("Successful! Commands are deployed.")
+    }
+    catch (error) {
+        console.error("An error occurred. Please check code.")
+    }
 }
 
 main().catch(err => console.log(err))

@@ -1,14 +1,15 @@
 {
     "compilerOptions": {
 	/* Visit https://aka.ms/tsconfig.json to read more about this file */
-	"target": "es2019",                                  
+	"target": "es2020",                                  
 	"experimentalDecorators": true,                   
-	"module": "es2015",
+	"module": "commonjs",
 	"moduleResolution": "node",  
 	"baseUrl": "./src",
 	"outDir": ".",
 	"typeRoots": [
 	    "node_modules/@types",
+	    "src/types"
 	],
 	"sourceMap": false,
 	"esModuleInterop": true,
@@ -18,6 +19,5 @@
 	"resolveJsonModule": true,
 	"skipLibCheck": true
     },
-    "include": ["./src/*.ts", "./src/commands/*.ts"],
     "exclude": ["node_modules"]
 }

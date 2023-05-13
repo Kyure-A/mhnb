@@ -1,4 +1,5 @@
-import { ActionRowBuilder, Events, ModalBuilder, TextInputBuilder, TextInputStyle, SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import axios, { isCancel, AxiosError } from "axios";
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,6 +11,20 @@ module.exports = {
 
         if (interaction.commandName == "list") {
 
+            await interaction.deferReply();
+
+            await axios.get(process.env.gas_url!)
+                .then(response => {
+                    const fields: Field[] = response.data;
+                    const embeds: EmbedBuilder = new EmbedBuilder()
+                        .setTitle("課題リスト")
+                        .addFields(fields);
+                    interaction.editReply({ embeds: [embeds] });
+                })
+                .catch(error => {
+                    console.error(error);
+                    interaction.editReply("axios in list.js threw error")
+                });
         }
     }
 }
