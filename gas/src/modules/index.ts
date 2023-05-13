@@ -13,7 +13,7 @@ export function wakeGlitch(): void {
     console.log(response);
 }
 
-export async function sortSheet(sheet: GoogleAppsScript.Spreadsheet.Sheet): Promise<void> {
+export function sortSheet(sheet: GoogleAppsScript.Spreadsheet.Sheet): void {
     const range = sheet.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn());
     range.sort({ column: 3, ascending: true });
     range.removeDuplicates();
@@ -66,7 +66,7 @@ export async function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params
 
     sheet.appendRow([homework, subject, date, description]);
 
-    await sortSheet(sheet);
+    sortSheet(sheet);
 }
 
 export function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
