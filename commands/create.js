@@ -39,7 +39,7 @@ module.exports = {
             return;
         if (interaction.commandName == "create") {
             const modal = new discord_js_1.ModalBuilder()
-                .setCustomId("modal")
+                .setCustomId("create")
                 .setTitle("課題入力フォーム");
             const homework_name = new discord_js_1.TextInputBuilder()
                 .setCustomId("homework_name")

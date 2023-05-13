@@ -89,12 +89,14 @@ client.on(Events.InteractionCreate, async interaction => {
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isModalSubmit()) return;
 
-    try {
-        await create.modal(interaction);
-    }
+    if (interaction.customId === "create") {
+        try {
+            await create.modal(interaction);
+        }
 
-    catch (error) {
-        console.error(error);
+        catch (error) {
+            console.error(error);
+        }
     }
 });
 

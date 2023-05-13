@@ -87,11 +87,13 @@ client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
 client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
     if (!interaction.isModalSubmit())
         return;
-    try {
-        await create.modal(interaction);
-    }
-    catch (error) {
-        console.error(error);
+    if (interaction.customId === "create") {
+        try {
+            await create.modal(interaction);
+        }
+        catch (error) {
+            console.error(error);
+        }
     }
 });
 client.login(process.env.token);

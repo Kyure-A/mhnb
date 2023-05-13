@@ -28,11 +28,13 @@ dotenv.config();
 const discord_js_1 = require("discord.js");
 const create = require("./commands/create");
 const list = require("./commands/list");
-const del = require("./commands/delete"); // yoyakugo datta
+const del = require("./commands/delete");
+const edit = require("./commands/edit");
 const commands = [
     create.data.toJSON(),
     list.data.toJSON(),
-    del.data.toJSON()
+    del.data.toJSON(),
+    edit.data.toJSON()
 ];
 const rest = new discord_js_1.REST({ version: '10' }).setToken(process.env.token);
 async function main() {
