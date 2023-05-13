@@ -69,8 +69,12 @@ export async function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params
     sortSheet(sheet);
 }
 
-export function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
+export async function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any) {
+    const task_number: number = await params.task_number;
 
+    sheet.deleteRow(task_number);
+
+    sortSheet(sheet);
 }
 
 // "/list"
@@ -84,9 +88,9 @@ export function doGet(): GoogleAppsScript.Content.TextOutput {
 }
 
 // "/create", "/delete"
-export async function doPost(e: any): GoogleAppsScript.Content.TextOutput {
+export async function doPost(e: any): Promise<GoogleAppsScript.Content.TextOutput> {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
-    const params: JsonCreate = await JSON.parse(e.postData.getDataAsString());
+    const params = await JSON.parse(e.postData.getDataAsString());
     const post_type: string = params.command;
 
     if (post_type == "create") {
@@ -95,6 +99,10 @@ export async function doPost(e: any): GoogleAppsScript.Content.TextOutput {
 
 
     if (post_type == "delete") {
+        await doDelete(sheet!, params);
+    }
+
+    if (post_type == "edit") {
 
     }
 

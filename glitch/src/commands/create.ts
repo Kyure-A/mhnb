@@ -15,7 +15,7 @@ module.exports = {
 
         if (interaction.commandName == "create") {
             const modal: ModalBuilder = new ModalBuilder()
-                .setCustomId("modal")
+                .setCustomId("create")
                 .setTitle("課題入力フォーム");
             const homework_name: TextInputBuilder = new TextInputBuilder()
                 .setCustomId("homework_name")
