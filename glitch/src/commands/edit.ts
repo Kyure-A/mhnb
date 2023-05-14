@@ -16,11 +16,12 @@ module.exports = {
         if (interaction.commandName == "edit") {
 
             const task_number: number = await interaction.options.getInteger("task_number")
+            const task_str: string = String(task_number);
 
             await axios.get(process.env.gas_url!, {
                 params: {
-                    command: "edit",
-                    task_number: task_number
+                    "command": "edit",
+                    "task_number": task_str
                 }
             })
                 .then(response => {

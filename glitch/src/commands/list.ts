@@ -15,7 +15,7 @@ module.exports = {
 
             await axios.get(process.env.gas_url!, {
                 params: {
-                    command: "list"
+                    "command": "list"
                 }
             })
                 .then(response => {
