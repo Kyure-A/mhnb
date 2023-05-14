@@ -15,8 +15,8 @@ module.exports = {
 
         if (interaction.commandName == "edit") {
 
-            const task_number: number = await interaction.options.getInteger("task_number")
-            const task_str: string = String(task_number);
+            const task_num: number = await interaction.options.getInteger("task_number")
+            const task_str: string = String(task_num);
 
             await axios.get(process.env.gas_url!, {
                 params: {
@@ -30,13 +30,11 @@ module.exports = {
                     const modal: ModalBuilder = new ModalBuilder()
                         .setCustomId("edit")
                         .setTitle("課題入力フォーム");
-                    const task: TextInputBuilder = new TextInputBuilder()
+                    const task_number: TextInputBuilder = new TextInputBuilder()
                         .setCustomId("task_number")
                         .setLabel("課題番号（変更しないでください）")
-                        .setMinLength(1)
-                        .setMaxLength(2)
                         .setStyle(TextInputStyle.Short)
-                        .setValue(String(task_number));
+                        .setValue(task_str);
                     const homework_name: TextInputBuilder = new TextInputBuilder()
                         .setCustomId("homework_name")
                         .setLabel("課題名")
@@ -78,7 +76,7 @@ module.exports = {
                         .setValue(json.description);
 
                     modal.addComponents(
-                        new ActionRowBuilder<TextInputBuilder>().addComponents(task),
+                        new ActionRowBuilder<TextInputBuilder>().addComponents(task_number),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(homework_name),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(subject_name),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(month),
