@@ -80,6 +80,20 @@ client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
             }
         }
     }
+    else if (interaction.commandName === edit.data.name) {
+        try {
+            await edit.execute(interaction);
+        }
+        catch (error) {
+            console.error(error);
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp({ content: "返信または応答準備中にエラーが発生しました", ephemeral: true });
+            }
+            else {
+                await interaction.reply({ content: "何もできませんでした", ephemeral: true });
+            }
+        }
+    }
     else {
         console.error(`${interaction.commandName} is not found`);
     }
