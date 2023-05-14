@@ -15,6 +15,10 @@ This Discord Bot is designed to manage homework assignments on the class Discord
 ### /delete
 ![Demo_delete](https://github.com/Kyure-A/mhnb/assets/49436968/57519d59-e321-4946-b1c1-15e50121d0be)
 
+### /edit
+![Demo_edit_1](https://github.com/Kyure-A/mhnb/assets/49436968/86d13054-607a-4c6f-af27-d483b31bb0da)
+![Demo_edit_2](https://github.com/Kyure-A/mhnb/assets/49436968/04e1bd58-b9f2-425e-a7a1-5252ec0d9df5)
+
 
 ## Requirement
 - Node.js
