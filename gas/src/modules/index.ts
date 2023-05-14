@@ -141,7 +141,7 @@ export async function doPostEdit(sheet: GoogleAppsScript.Spreadsheet.Sheet, para
 // "/list", "/edit"
 export function doGet(e: any): GoogleAppsScript.Content.TextOutput {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
-    const params = JSON.parse(e.postData.getDataAsString());
+    const params = e.parameter;
     const get_type: string = params.command;
 
     if (get_type == "edit") {
