@@ -13,7 +13,11 @@ module.exports = {
 
             await interaction.deferReply();
 
-            await axios.get(process.env.gas_url!)
+            await axios.get(process.env.gas_url!, {
+                params: {
+                    command: "list"
+                }
+            })
                 .then(response => {
                     const fields: Field[] = response.data;
                     const embeds: EmbedBuilder = new EmbedBuilder()

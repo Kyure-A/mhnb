@@ -14,7 +14,11 @@ module.exports = {
             return;
         if (interaction.commandName == "list") {
             await interaction.deferReply();
-            await axios_1.default.get(process.env.gas_url)
+            await axios_1.default.get(process.env.gas_url, {
+                params: {
+                    command: "list"
+                }
+            })
                 .then(response => {
                 const fields = response.data;
                 const embeds = new discord_js_1.EmbedBuilder()
