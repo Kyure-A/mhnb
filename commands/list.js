@@ -16,7 +16,7 @@ module.exports = {
             await interaction.deferReply();
             await axios_1.default.get(process.env.gas_url, {
                 params: {
-                    command: "list"
+                    "command": "list"
                 }
             })
                 .then(response => {
