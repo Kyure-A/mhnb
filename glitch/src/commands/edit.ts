@@ -30,6 +30,13 @@ module.exports = {
                     const modal: ModalBuilder = new ModalBuilder()
                         .setCustomId("edit")
                         .setTitle("課題入力フォーム");
+                    const task: TextInputBuilder = new TextInputBuilder()
+                        .setCustomId("task_number")
+                        .setLabel("課題番号（変更しないでください）")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setStyle(TextInputStyle.Short)
+                        .setValue(String(task_number));
                     const homework_name: TextInputBuilder = new TextInputBuilder()
                         .setCustomId("homework_name")
                         .setLabel("課題名")
@@ -71,6 +78,7 @@ module.exports = {
                         .setValue(json.description);
 
                     modal.addComponents(
+                        new ActionRowBuilder<TextInputBuilder>().addComponents(task),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(homework_name),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(subject_name),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(month),
@@ -88,6 +96,7 @@ module.exports = {
 
     },
     modal: async function(interaction: any) {
+        const task_number: string = await interaction.fields.getTextInputValue("task_number");
         const homework: string = await interaction.fields.getTextInputValue("homework_name");
         const subject: string = await interaction.fields.getTextInputValue("subject_name");
         const month: string = await interaction.fields.getTextInputValue("month");
@@ -96,6 +105,7 @@ module.exports = {
 
         const json = {
             "command": "edit",
+            "task_number": task_number,
             "homework": homework,
             "subject": subject,
             "month": month,

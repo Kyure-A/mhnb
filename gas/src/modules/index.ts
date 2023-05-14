@@ -61,8 +61,8 @@ export async function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params
     const day_str: string = await params.day;
     const description: string = await params.description;
 
-    const month = parseInt(month_str);
-    const day = parseInt(day_str);
+    const month: number = parseInt(month_str);
+    const day: number = parseInt(day_str);
 
     const now: Date = new Date();
 
@@ -90,7 +90,8 @@ export async function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet, params
 }
 
 export function doGetEdit(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any): GoogleAppsScript.Content.TextOutput {
-    const i: number = parseInt(params.task_number);
+    // 0 indexed
+    const i: number = parseInt(params.task_number) - 1;
     const value: string[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getDisplayValues();
     const homework_name: string = value[i][0];
     const subject_name: string = value[i][1];
@@ -132,6 +133,7 @@ export async function doPostEdit(sheet: GoogleAppsScript.Spreadsheet.Sheet, para
 
     const date: Date = new Date(now.getFullYear() + adder, month - 1, day);
 
+    // 1 indexed
     sheet.getRange(task_number, 1).setValue(homework);
     sheet.getRange(task_number, 2).setValue(subject);
     sheet.getRange(task_number, 3).setValue(date);
