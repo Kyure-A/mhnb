@@ -18,7 +18,7 @@ module.exports = {
         if (interaction.commandName == "delete") {
             const task_number = await interaction.options.getInteger("task_number");
             const json = {
-                "command": "create",
+                "command": "delete",
                 "task_number": task_number
             };
             await axios_1.default.post(process.env.gas_url, json)
