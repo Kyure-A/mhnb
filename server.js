@@ -29,6 +29,7 @@ const discord_js_1 = require("discord.js");
 const create = require("./commands/create");
 const list = require("./commands/list");
 const del = require("./commands/delete"); // yoyakugo datta
+const edit = require("./commands/edit");
 const client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBits.Guilds, discord_js_1.GatewayIntentBits.GuildMessages, discord_js_1.GatewayIntentBits.MessageContent] });
 client.once(discord_js_1.Events.ClientReady, () => {
     console.log("Ready");
@@ -90,6 +91,14 @@ client.on(discord_js_1.Events.InteractionCreate, async (interaction) => {
     if (interaction.customId === "create") {
         try {
             await create.modal(interaction);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+    if (interaction.customId === "edit") {
+        try {
+            await edit.modal(interaction);
         }
         catch (error) {
             console.error(error);

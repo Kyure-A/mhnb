@@ -6,6 +6,7 @@ import { Client, Events, GatewayIntentBits } from "discord.js";
 const create = require("./commands/create");
 const list = require("./commands/list");
 const del = require("./commands/delete"); // yoyakugo datta
+const edit = require("./commands/edit");
 
 const client: Client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
@@ -92,6 +93,16 @@ client.on(Events.InteractionCreate, async interaction => {
     if (interaction.customId === "create") {
         try {
             await create.modal(interaction);
+        }
+
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    if (interaction.customId === "edit") {
+        try {
+            await edit.modal(interaction);
         }
 
         catch (error) {
