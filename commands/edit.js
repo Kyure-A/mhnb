@@ -16,8 +16,8 @@ module.exports = {
         if (!interaction.isChatInputCommand())
             return;
         if (interaction.commandName == "edit") {
-            const task_number = await interaction.options.getInteger("task_number");
-            const task_str = String(task_number);
+            const task_num = await interaction.options.getInteger("task_number");
+            const task_str = String(task_num);
             await axios_1.default.get(process.env.gas_url, {
                 params: {
                     "command": "edit",
@@ -29,13 +29,11 @@ module.exports = {
                 const modal = new discord_js_1.ModalBuilder()
                     .setCustomId("edit")
                     .setTitle("課題入力フォーム");
-                const task = new discord_js_1.TextInputBuilder()
+                const task_number = new discord_js_1.TextInputBuilder()
                     .setCustomId("task_number")
                     .setLabel("課題番号（変更しないでください）")
-                    .setMinLength(1)
-                    .setMaxLength(2)
                     .setStyle(discord_js_1.TextInputStyle.Short)
-                    .setValue(String(task_number));
+                    .setValue(task_str);
                 const homework_name = new discord_js_1.TextInputBuilder()
                     .setCustomId("homework_name")
                     .setLabel("課題名")
@@ -75,7 +73,7 @@ module.exports = {
                     .setMaxLength(100)
                     .setStyle(discord_js_1.TextInputStyle.Paragraph)
                     .setValue(json.description);
-                modal.addComponents(new discord_js_1.ActionRowBuilder().addComponents(task), new discord_js_1.ActionRowBuilder().addComponents(homework_name), new discord_js_1.ActionRowBuilder().addComponents(subject_name), new discord_js_1.ActionRowBuilder().addComponents(month), new discord_js_1.ActionRowBuilder().addComponents(day), new discord_js_1.ActionRowBuilder().addComponents(description));
+                modal.addComponents(new discord_js_1.ActionRowBuilder().addComponents(task_number), new discord_js_1.ActionRowBuilder().addComponents(homework_name), new discord_js_1.ActionRowBuilder().addComponents(subject_name), new discord_js_1.ActionRowBuilder().addComponents(month), new discord_js_1.ActionRowBuilder().addComponents(day), new discord_js_1.ActionRowBuilder().addComponents(description));
                 interaction.showModal(modal);
             })
                 .catch(error => {
