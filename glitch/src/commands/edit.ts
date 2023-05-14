@@ -17,7 +17,12 @@ module.exports = {
 
             const task_number: number = await interaction.options.getInteger("task_number")
 
-            await axios.get(process.env.gas_url!)
+            await axios.get(process.env.gas_url!, {
+                params: {
+                    command: "edit",
+                    task_number: task_number
+                }
+            })
                 .then(response => {
                     const json = response.data;
 

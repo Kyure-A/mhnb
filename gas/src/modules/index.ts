@@ -90,7 +90,7 @@ export async function doDelete(sheet: GoogleAppsScript.Spreadsheet.Sheet, params
 }
 
 export function doGetEdit(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any): GoogleAppsScript.Content.TextOutput {
-    const i: number = params.task_number;
+    const i: number = params.task_number
     const value: string[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getDisplayValues();
     const homework_name: string = value[i][0];
     const subject_name: string = value[i][1];
