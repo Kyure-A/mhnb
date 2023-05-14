@@ -111,18 +111,21 @@ export function doGetEdit(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any
         "description": description
     }
 
+    PropertiesService.getDocumentProperties().setProperty("task_number", params.task_number);
+
     return ContentService.createTextOutput(JSON.stringify(json)).setMimeType(ContentService.MimeType.JSON);
 }
 
 export async function doPostEdit(sheet: GoogleAppsScript.Spreadsheet.Sheet, params: any) {
-    const task_str: string = await params.task_number;
+    const task_str: string | null = PropertiesService.getDocumentProperties().getProperty("task_number");
+    PropertiesService.getDocumentProperties().setProperty("task_number", "-1");
     const homework: string = await params.homework;
     const subject: string = await params.subject;
     const month_str: string = await params.month;
     const day_str: string = await params.day;
     const description: string = await params.description;
 
-    const task_number: number = parseInt(task_str);
+    const task_number: number = parseInt(task_str!);
     const month = parseInt(month_str);
     const day = parseInt(day_str);
 

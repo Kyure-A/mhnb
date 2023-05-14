@@ -30,11 +30,6 @@ module.exports = {
                     const modal: ModalBuilder = new ModalBuilder()
                         .setCustomId("edit")
                         .setTitle("課題入力フォーム");
-                    const task_number: TextInputBuilder = new TextInputBuilder()
-                        .setCustomId("task_number")
-                        .setLabel("課題番号（変更しないでください）")
-                        .setStyle(TextInputStyle.Short)
-                        .setValue(task_str);
                     const homework_name: TextInputBuilder = new TextInputBuilder()
                         .setCustomId("homework_name")
                         .setLabel("課題名")
@@ -76,13 +71,12 @@ module.exports = {
                         .setValue(json.description);
 
                     modal.addComponents(
-                        new ActionRowBuilder<TextInputBuilder>().addComponents(task_number),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(homework_name),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(subject_name),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(month),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(day),
                         new ActionRowBuilder<TextInputBuilder>().addComponents(description),
-                    )
+                    );
 
                     interaction.showModal(modal);
                 })
@@ -94,7 +88,6 @@ module.exports = {
 
     },
     modal: async function(interaction: any) {
-        const task_number: string = await interaction.fields.getTextInputValue("task_number");
         const homework: string = await interaction.fields.getTextInputValue("homework_name");
         const subject: string = await interaction.fields.getTextInputValue("subject_name");
         const month: string = await interaction.fields.getTextInputValue("month");
@@ -103,7 +96,6 @@ module.exports = {
 
         const json = {
             "command": "edit",
-            "task_number": task_number,
             "homework": homework,
             "subject": subject,
             "month": month,
