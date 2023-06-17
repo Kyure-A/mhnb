@@ -183,3 +183,57 @@ export async function doPost(e: any): Promise<GoogleAppsScript.Content.TextOutpu
 
     return ContentService.createTextOutput(output);
 }
+
+// Discord.js が動くサーバサイドで通知を実装するのがクソ面倒だったため，定時実行でよしなにしてくれる GAS で叩く
+export function remindTasks(sheet: GoogleAppsScript.Spreadsheet.Sheet): void {
+    const value: string[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getDisplayValues();
+
+    sortSheet(sheet);
+
+    let fields: Field[] = [];
+
+    const now = new Date();
+    const now_month: number = now.getMonth() + 1;
+    const now_day: number = now.getDate();
+
+    for (let i = 0; i < value.length; i++) {
+        const homework_name: string = value[i][0];
+        const subject_name: string = value[i][1];
+        const date_str: string = value[i][2];
+        const description: string = value[i][3];
+
+        const date: Date = parse(date_str, "yyyy/MM/dd", new Date());
+
+        const month: number = date.getMonth() + 1;
+        const day: number = date.getDate();
+
+        const counter: number = i + 1;
+
+        const field: Field = {
+            "name": `[${counter}] ${subject_name}: ${homework_name} (${month}/${day})`,
+            "value": description,
+            "inline": false
+        }
+
+        if (date == now) fields.push(field);
+    }
+
+    const webhook_url = PropertiesService.getDocumentProperties().getProperty("webhook");
+
+    const message = {
+        "embeds": [
+            {
+                "title": `${now_month}/${now_day} 提出の課題`,
+                "fields": fields
+            }
+        ]
+    };
+
+    const param: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
+        "method": "post",
+        "headers": { 'Content-type': "application/json" },
+        "payload": JSON.stringify(message)
+    };
+
+    if (fields.length > 0) UrlFetchApp.fetch(webhook_url!, param);
+}
