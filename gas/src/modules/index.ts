@@ -185,10 +185,11 @@ export async function doPost(e: any): Promise<GoogleAppsScript.Content.TextOutpu
 }
 
 // Discord.js が動くサーバサイドで通知を実装するのがクソ面倒だったため，定時実行でよしなにしてくれる GAS で叩く
-export function remindTasks(sheet: GoogleAppsScript.Spreadsheet.Sheet): void {
+export function remindTasks(): void {
+    const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     const value: string[][] = sheet!.getRange(1, 1, sheet!.getLastRow(), sheet!.getLastColumn()).getDisplayValues();
 
-    sortSheet(sheet);
+    sortSheet(sheet!);
 
     let fields: Field[] = [];
 
@@ -207,15 +208,17 @@ export function remindTasks(sheet: GoogleAppsScript.Spreadsheet.Sheet): void {
         const month: number = date.getMonth() + 1;
         const day: number = date.getDate();
 
+        if (!(day == now_day && month == now_month)) continue;
+
         const counter: number = i + 1;
 
         const field: Field = {
-            "name": `[${counter}] ${subject_name}: ${homework_name} (${month}/${day})`,
+            "name": `[${counter}] ${subject_name}: ${homework_name}`,
             "value": description,
             "inline": false
         }
 
-        if (date == now) fields.push(field);
+        fields.push(field);
     }
 
     const webhook_url = PropertiesService.getDocumentProperties().getProperty("webhook");
