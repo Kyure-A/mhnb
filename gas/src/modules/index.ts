@@ -210,7 +210,7 @@ export function remindTasks(): void {
 
         if (!(day == now_day && month == now_month)) continue;
 
-        const counter: number = i + 1;
+        const counter: number = fields.length + 1;
 
         const field: Field = {
             "name": `[${counter}] ${subject_name}: ${homework_name}`,
