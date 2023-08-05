@@ -53,6 +53,7 @@ export async function doCreate(sheet: GoogleAppsScript.Spreadsheet.Sheet, params
 
     const now: Date = new Date();
 
+    // 年の変更への対応
     let adder: 0 | 1 = 0;
     if (now.getMonth() > month) adder = 1;
 

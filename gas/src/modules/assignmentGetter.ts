@@ -2,10 +2,10 @@ function nanka_ii_mojiretunosyoriwosuru_kansuu(course_name: string): string {
     // "_" とかを消すことでうまいこと教科の名前を抽出する関数
 }
 
-export async function getClassroomAssignments(): string[][] {
+export async function getClassroomAssignments(): any {
     const all_courses: GoogleAppsScript.Classroom.Schema.Course | undefined = Classroom.Courses?.list().courses;
 
-    let value: string[][] = [];
+    let params = [];
 
     if (all_courses == undefined) return [[]];
 
@@ -19,12 +19,21 @@ export async function getClassroomAssignments(): string[][] {
 
             const homework_name: string = work.title;
             const subject_name: string = nanka_ii_mojiretunosyoriwosuru_kansuu(course.name);
-            const date_str: string = work.dueDate.year.toString() + work.dueDate.month.toString() + work.dueDate.day.toString();
             const description: string = work.description;
 
-            value.push([homework_name, subject_name, date_str, description]);
+            params.push({
+                homework: homework_name,
+                subject: subject_name,
+                month: work.dueDate.month.toString(),
+                day: work.dueDate.day.toString(),
+                description: description
+            })
         }
     }
 
-    return value;
+    return params;
+}
+
+export async function getMoodleAssignments(): any {
+
 }

@@ -15,7 +15,6 @@ export function wakeGlitch(): void {
 }
 
 // Discord.js が動くサーバサイドで通知を実装するのがクソ面倒だったため，定時実行でよしなにしてくれる GAS で叩く
-// Fieldsbuilder を絶対に使えるような構造をしているが now を与えるのがだるい
 export function remindTasks(): void {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
 
@@ -51,6 +50,27 @@ export function remindTasks(): void {
 export async function addTaskFromClassroom() {
     const sheet: GoogleAppsScript.Spreadsheet.Sheet | null = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("data");
     sortSheet(sheet!);
-    let fields: Field[] = fieldsBuilder(sheet!, undefined, getClassroomAssignments());
 
+    const params = getClassroomAssignments();
+
+    const homework: string = params.homework;
+    const subject: string = params.subject;
+    const month_str: string = params.month;
+    const day_str: string = params.day;
+    const description: string = params.description;
+
+    const month: number = parseInt(month_str);
+    const day: number = parseInt(day_str);
+
+    const now: Date = new Date();
+
+    // 年の変更への対応
+    let adder: 0 | 1 = 0;
+    if (now.getMonth() > month) adder = 1;
+
+    const date: Date = new Date(now.getFullYear() + adder, month - 1, day);
+
+    sheet!.appendRow([homework, subject, date, description]);
+
+    sortSheet(sheet!);
 }
